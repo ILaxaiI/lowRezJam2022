@@ -6,13 +6,9 @@ radiation.h = 10
 radiation.damage = 1
 radiation.collidewithplayer = true
 
-local rnd = love.math.random
 function radiation.new(speed)
-    local regions = radiation.spawnRegions
-    local spawnRegion = regions[rnd(1,#regions)]
-    local x,y = rnd(spawnRegion[1],spawnRegion[3]),rnd(spawnRegion[2],spawnRegion[4])
-
-
+   
+    local x,y = radiation:getRandomSpawn()
     return setmetatable({
         x = x,
         y = y,

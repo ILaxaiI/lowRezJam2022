@@ -66,14 +66,10 @@ solarflare.shootAnim:setCallback("onEnd",function (anim,self,frame)
     self:die()
 end)
 
-local rnd = love.math.random
 solarflare.damage =1
 solarflare.spawnRegions = {{5,-5,25,-5},{40,-5,51,-5}}
 function  solarflare.new(warnings)
-
-    local regions = solarflare.spawnRegions
-    local spawnRegion = regions[rnd(1,#regions)]
-    local x,y = rnd(spawnRegion[1],spawnRegion[3]),rnd(spawnRegion[2],spawnRegion[4])
+    local x,y = solarflare:getRandomSpawn()
     local fl = {
         x = x,
         y = y,

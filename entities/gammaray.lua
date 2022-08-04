@@ -68,8 +68,9 @@ end)
 
 
 gammaray.damage =3
-function  gammaray.new(x,y)
+function  gammaray.new()
 
+    local x,y = gammaray:getRandomSpawn()
     local fl = {
         x = x,
         y = y,

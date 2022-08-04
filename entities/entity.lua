@@ -13,6 +13,13 @@ function  entity:die()
     self.isDead = true
 end
 
+local rnd = love.math.random
+function entity:getRandomSpawn()
+    local regions = self.spawnRegions
+    local spawnRegion = regions[rnd(1,#regions)]
+    return rnd(spawnRegion[1],spawnRegion[3]),rnd(spawnRegion[2],spawnRegion[4])
+end
+
 entity.spawnRegions = {{0,-5,60,-5}}
 
 local gamestate = require("gamestate")

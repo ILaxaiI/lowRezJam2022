@@ -7,11 +7,8 @@ asteroid.h = 6
 asteroid.collidewithplayer = true
 
 
-local rnd = love.math.random
 function asteroid.new(speed)
-    local regions = asteroid.spawnRegions
-    local spawnRegion = regions[rnd(1,#regions)]
-    local x,y = rnd(spawnRegion[1],spawnRegion[3]),rnd(spawnRegion[2],spawnRegion[4])
+    local x,y = asteroid:getRandomSpawn()
 
     return setmetatable({
         x = x,

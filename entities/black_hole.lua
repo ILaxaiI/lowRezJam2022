@@ -57,11 +57,9 @@ black_hole.spawnRegions = {{0,-ch-1,60,-ch-1}}
 black_hole.damage = 3
 black_hole.collidewithplayer = true
 
-local rnd = love.math.random
-function black_hole.new(speed)
-    local regions = black_hole.spawnRegions
-    local spawnRegion = regions[rnd(1,#regions)]
-    local x,y = rnd(spawnRegion[1],spawnRegion[3]),rnd(spawnRegion[2],spawnRegion[4])
+
+function black_hole.new(speed) 
+    local x,y = black_hole:getRandomSpawn()
     local hole = {
         x = x,
         y = y,
