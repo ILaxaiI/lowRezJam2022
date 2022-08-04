@@ -3,9 +3,9 @@ bullet.__index = bullet
 bullet.speed =70
 bullet.type = "bullet"
 bullet.damage = 1
-bullet.w =1
+bullet.w = 1
 bullet.h = 1
-
+bullet.explosionSize = 2
 function bullet.new(x,y,angle)
     return setmetatable({
         x = x,
@@ -23,14 +23,14 @@ function  bullet:update(dt)
 
     self.x = self.x + self.vx*dt
     self.y = self.y + self.vy*dt
-    if self.x > 100 or self.x < -100 or self.y < -100 or self.y > 100 then
+    if self.x > 100 or self.x < -100 or self.y < -5 or self.y > 100 then
         gamestate.entities.bullets:remove(self)
     end
 
     for i,ent in ipairs(gamestate.entities.entities) do
         if ent.type == "asteroid" and not ent.isDead and
-            overlap.aabb(self.x,self.y,self.w,self.h,ent.x,ent.y,ent.w,ent.h) then
-            ent:takeDamage(self.damage)
+            ent.overlap(self,ent) then
+            ent:takeDamage(self.damage,self)
             self:die()
             break
         end

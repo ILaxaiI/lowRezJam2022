@@ -26,8 +26,9 @@ function  auguments.gun_damage.apply(level)
     bullet.damage = auguments.gun_damage.basenum
     for i = 0,level-1 do
         bullet.damage = bullet.damage + .3*(auguments.gun_damage.maxLevel-i)/(.75*auguments.gun_damage.maxLevel)
+  
     end
-    print(level,(auguments.gun_damage.maxLevel-level)/(.6*auguments.gun_damage.maxLevel),guns.firerate)
+   
 end
 
 function  auguments.purchase(name)

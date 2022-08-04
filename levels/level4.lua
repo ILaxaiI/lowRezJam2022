@@ -7,10 +7,10 @@ return {
     },
     
     
-    minSpawnTime = 1,
-    maxSpawnTime = 3,
+    minSpawnTime = .8,
+    maxSpawnTime = 2,
 
     enemies = {
-        {"asteroid",.5,24},{"black_hole",.2,12},{"radiation",.07,24},{"gamma_ray",.23,10}
+        {"asteroid",.45,3},{"large_asteroid",.25,3},{"black_hole",.0525,12},{"radiation",.05,24},{"gamma_ray",.05,10},{"solar_flare",.125,10}
     }
 }

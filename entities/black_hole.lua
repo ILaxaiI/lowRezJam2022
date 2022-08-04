@@ -71,7 +71,8 @@ function black_hole.new(speed)
     return setmetatable(hole,black_hole)
 end
 
-function  black_hole:draw() end
+function  black_hole:draw() 
+end
 
 local holeCanv = love.graphics.newCanvas(viewport.canvas:getWidth()/2,viewport.canvas:getHeight()/2)
 
@@ -98,6 +99,7 @@ function black_hole:render()
     love.graphics.setShader()
 
     love.graphics.setCanvas(viewport.canvas)
+    love.graphics.clear()
     love.graphics.draw(buffer)
     love.graphics.setCanvas()
 end

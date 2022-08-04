@@ -24,6 +24,7 @@ local gunSpawns = {3,14,44,55}
 
 local habitat = require("entities.habitat").new()
 
+gamestate.entities.habitat:insert( habitat)
 
     local gun = require("entities.gunbase")
     local gunBases = {}
@@ -36,7 +37,6 @@ for i,v in ipairs(gunSpawns) do
 end
 
 
-gamestate.entities.habitat:insert( habitat)
 gunBases[0]:attach(require("player.guns.cannon2shot").new())
 gunBases[1]:attach(require("player.guns.cannon").new())
 local selectedWeapon = 0
@@ -58,11 +58,6 @@ function  game.wheelmoved(dx,dy)
     end
 end
 
-
-
-local asteroid = require("entities.asteroid")
-local radiation = require("entities.radiation")
-local flare = require("entities.solarflare")
 
 local level = require("levels.level")
 
@@ -120,6 +115,7 @@ local viewport = require("ui.viewport")
 local vec2 = require("util.vec2")
 local bh = require("entities.enemies").black_hole
 
+local bhrender = false
 function  game.draw()
     viewport.beginRender()
     love.graphics.draw(stars,0,-2)
@@ -138,9 +134,21 @@ function  game.draw()
     end
 
     animation.drawDetached()
- 
+
+    
+
+
+
     viewport.endRender()
+    
     bh:render()
+    if bhrender then
+        love.graphics.setCanvas(viewport.canvas)
+        for i,v in ipairs(gamestate.entities.entities) do
+            v:drawHitbox()
+        end
+        love.graphics.setCanvas()
+    end
     viewport.draw()
     
 
@@ -159,6 +167,7 @@ end
 
 local upgrades = require("player.upgrades.auguments")
 function  game.keypressed(key)
+    if key == "b" then bhrender = not bhrender end
     if key == "w" then upgrades.purchase("gun_firerate") end
     if key == "e" then upgrades.purchase("gun_damage") end
     if key == "space" then 

@@ -68,6 +68,7 @@ end)
 
 
 gammaray.damage =3
+gammaray.spawnRegions = {{5,-5,15,-5},{55,-5,59,-5}}
 function  gammaray.new()
 
     local x,y = gammaray:getRandomSpawn()

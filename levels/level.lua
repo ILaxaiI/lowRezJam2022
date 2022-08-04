@@ -44,12 +44,12 @@ function  level.update(dt)
     
     if spawnTimer <= 0 then
         local enemy = getRandomWeigthedElement(level.current.enemies)
-
-        local x = love.math.random()*64
-        if not enemies[enemy[1]] then print("enemy not found") else
-        gamestate.entities.entities:insert(enemies[enemy[1]].new(enemy[3]))
-
-        spawnTimer = love.math.random()*(level.current.maxSpawnTime-level.current.minSpawnTime) + level.current.minSpawnTime
+        if enemy then
+            local x = love.math.random()*64
+            if not enemies[enemy[1]] then print("enemy not found") else
+            gamestate.entities.entities:insert(enemies[enemy[1]].new(enemy[3]))
+            spawnTimer = love.math.random()*(level.current.maxSpawnTime-level.current.minSpawnTime) + level.current.minSpawnTime
+            end
         end
     end
 

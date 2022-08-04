@@ -4,6 +4,8 @@ habitat.sprite = require("graphics.sprites").habitat_wide
 habitat.type = "habitat"
 habitat.w = 24--26
 habitat.h = 7--7
+habitat.aabbyo = 7
+habitat.aabbxo = 3
 function habitat.new()
     return setmetatable({
         x =27,
@@ -21,7 +23,7 @@ function  habitat:update(dt)
 
     for i,ent in ipairs(gamestate.entities.entities) do
         if (ent.collidewithplayer) and not ent.isDead and
-            overlap.aabb(self.x+3,self.y+5,self.w,self.h,ent.x + (ent.aabbxo or 0),ent.y+ (ent.aabbxo or 0),ent.w,ent.h) then
+            ent.overlap(self,ent) then
                 ent:impactPlayer(dt)
         end
     end
