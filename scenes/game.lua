@@ -173,6 +173,43 @@ function  game.keypressed(key)
     if key == "space" then 
         gamestate.player.health = gamestate.player.health - 1
     end
+
+
+
+
+
+    local old = selectedWeapon
+    local currentWeapon = gunBases[old].weapon
+    if key == "1" then
+        if gunBases[0]:select() then
+            selectedWeapon = 0
+            currentWeapon.isSelected = false
+            currentWeapon:switchOff()
+        end
+    end
+    if key == "2" then
+        if gunBases[1]:select() then
+            selectedWeapon =1
+            currentWeapon.isSelected = false
+            currentWeapon:switchOff()
+        end
+    end
+    if key == "3" then
+        if gunBases[2]:select() then
+            selectedWeapon = 2
+            currentWeapon.isSelected = false
+            currentWeapon:switchOff()
+        end
+    end
+    if key == "4" then
+        if gunBases[3]:select() then
+            selectedWeapon = 2
+            currentWeapon.isSelected = false
+            currentWeapon:switchOff()
+        end
+    end
+
+
 end
 
 return game

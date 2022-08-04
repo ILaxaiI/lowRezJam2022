@@ -11,6 +11,6 @@ return {
     maxSpawnTime = 2,
 
     enemies = {
-        {"asteroid",.45,3},{"large_asteroid",.25,3},{"black_hole",.0525,12},{"radiation",.05,24},{"gamma_ray",.05,10},{"solar_flare",.125,10}
+        {"asteroid",.55,3},{"large_asteroid",.15,3},{"black_hole",.0525,12},{"radiation",.05,24},{"gamma_ray",.05,10},{"solar_flare",.125,10}
     }
 }

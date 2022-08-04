@@ -5,8 +5,8 @@ return {
     songQueue = {
         "intro"
     },
-    minSpawnTime = 2,
-    maxSpawnTime = 6,
+    minSpawnTime = .5,
+    maxSpawnTime = 2,
 
     enemies = {
         {"asteroid",1,20}
