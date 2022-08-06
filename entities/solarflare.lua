@@ -66,7 +66,7 @@ solarflare.shootAnim:setCallback("onEnd",function (anim,self,frame)
     self:die()
 end)
 
-solarflare.damage =1
+solarflare.damage =1.6
 solarflare.spawnRegions = {{5,-5,25,-5},{40,-5,51,-5}}
 function  solarflare.new(warnings)
     local x,y = solarflare:getRandomSpawn()

@@ -5,12 +5,12 @@ viewport.scale = viewport.getScale()
 viewport.offsetx,viewport.offsety = viewport.getOffset()
 
 
+
 local state = require("util.state")
 state.load("scenes.game","game")
 state.load("scenes.mainmenu","mainmenu")
 state.load("scenes.shop","shop")
-
-
+state.load("scenes.gameOver","gameOver")
 
 
 
@@ -19,6 +19,8 @@ state.set("mainmenu")
 
 function  love.draw()
     state.draw()
+    
+    love.graphics.print(love.timer.getFPS())
 end
 
 function  love.update(dt)

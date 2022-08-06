@@ -57,6 +57,9 @@ black_hole.spawnRegions = {{0,-ch-1,60,-ch-1}}
 black_hole.damage = 3
 black_hole.collidewithplayer = true
 
+function black_hole.clear()
+    holes = {}
+end
 
 function black_hole.new(speed) 
     local x,y = black_hole:getRandomSpawn()

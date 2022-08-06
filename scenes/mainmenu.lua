@@ -3,9 +3,13 @@ local buttonSprite = love.graphics.newImage("graphics/menus/play_button.png")
 local state = require("util.state")
 local iw,ih = buttonSprite:getWidth(),buttonSprite:getHeight()
 
-local habitat = require("entities.habitat").new()
+local habitat 
 local button = require("ui.elements.button")
+local gamestate = require("gamestate")
 
+function mainmenu.init()
+    habitat = require("entities.habitat").new()
+end
 
 local buttons = {
         button.new(
@@ -37,7 +41,6 @@ function mainmenu.draw()
     for i,v in ipairs(buttons) do
         v:draw()
     end
-    
     habitat:draw()
     viewport.endRender()
     viewport.draw()

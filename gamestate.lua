@@ -1,7 +1,7 @@
 local gmst = {}
 gmst.__index = gmst
 
-local gamestate = {}
+local gamestate = setmetatable({},gmst)
 
 
 local entityMt = {}
@@ -22,14 +22,16 @@ function entityMt:insert(ent)
     ent.id = id
 end
 
+
 function gmst.default()
     gamestate.difficulty = 1
     gamestate.player = {
         passive_income = 10,
         money = 0,
-        health = 10,
+        health = 1,
         maxHealth = 10,
-        guns = {}
+        guns = {},
+        entity = nil -- = require("entities.habitat").new(),
     }
     gamestate.entities = {
         habitat = setmetatable({},entityMt),
@@ -40,12 +42,18 @@ function gmst.default()
         cannon_damage = 1,
         cannon_firerate = 3
     }
+    gamestate.guns = {
+        [0] =nil
+
+    }
     gamestate.stats = {}
+
+    gamestate.currentLevel = 0
+
     for i,v in pairs(gamestate.base_stats) do
         gamestate.stats[i] = v
     end
     gamestate.upgrades = {}
-    return setmetatable(gamestate,gmst)
 end
 
 

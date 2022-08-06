@@ -134,7 +134,9 @@ function animation.drawDetached()
         v:draw(0,0)
     end
 end
-
+function animation.clearDetached()
+    detached={}
+end
 
 function animation:draw(x,y)
     if self.playing then

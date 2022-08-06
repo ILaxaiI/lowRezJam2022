@@ -31,8 +31,7 @@ function  shop.draw()
     for i,v in ipairs(pages[currentPage]) do
         v:draw()
     end
-    
-    text.printNumber(gamestate.player.money,62,2)
+    love.graphics.print(gamestate.player.money,62-text.font:getWidth(gamestate.player.money),2)
     viewport.endRender()
     viewport.draw()
 end
