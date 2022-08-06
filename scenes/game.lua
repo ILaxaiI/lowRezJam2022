@@ -1,62 +1,63 @@
 local game = {}
-local star = love.graphics.newImage("graphics/star.png")
-local stars = love.graphics.newParticleSystem(star,1000)
 
-stars:setDirection(0,1)
-stars:setEmissionRate(4)
-stars:setEmissionArea("uniform",64,1,0,false)
-
-stars:setParticleLifetime(30)
-stars:setDirection(math.pi/2)
-stars:setSpeed(8,8)
-stars:setSizes(1)
-stars:start()
 
 local music = require("audio.music")
 
 
-for i = 1,20 do
-    stars:update(3)
-end
 
 local gamestate = require("gamestate")
 local gunSpawns = {3,14,44,55}
+local habitat
+--local habitat = require("entities.habitat").new()
 
-local habitat = require("entities.habitat").new()
+function game.init(_,hab)
+    if hab then
+        if habitat then
+            gamestate.entities.habitat:remove(habitat)
+        end
+        habitat = hab
+        gamestate.entities.habitat:insert(hab)
+        gamestate.player.entity = hab
+    end
+end
 
-gamestate.entities.habitat:insert( habitat)
+
+
 
     local gun = require("entities.gunbase")
     local gunBases = {}
     gamestate.player.guns = {}
 
-for i,v in ipairs(gunSpawns) do
-    local g =  gun.new(gunSpawns[i])
+    local g =  gun.new(gunSpawns[1])
     gamestate.entities.habitat:insert(g)
-    gunBases[i-1] = g
-end
+    gunBases[0] = g
 
 
-gunBases[0]:attach(require("player.guns.cannon2shot").new())
-gunBases[1]:attach(require("player.guns.cannon").new())
-local selectedWeapon = 0
+
+gunBases[0]:attach(require("entities.guns.cannon").new())
 gunBases[0]:select()
+local selectedWeapon = 0
 
 
 local healthbar = require("ui.healthbar")
 
-
-function  game.wheelmoved(dx,dy)
+local function  selectGun(new)
     local old = selectedWeapon
     local currentWeapon = gunBases[old].weapon
-
-    if gunBases[(old+dy)%4]:select() then
-        selectedWeapon = (old+dy)%4
-
+    if  gunBases[new] and gunBases[new]:select() then
+        selectedWeapon = new
         currentWeapon.isSelected = false
         currentWeapon:switchOff()
     end
 end
+
+function  game.wheelmoved(dx,dy)
+    selectGun((selectedWeapon+dy)%4)
+end
+
+
+
+
 
 
 local level = require("levels.level")
@@ -64,10 +65,12 @@ local level = require("levels.level")
 
 local animation = require("util.animation")
 
+local background = require("ui.background")
 function  game.update(dt)
     level.update(dt)
     animation.updateDetached(dt)
     
+    background.update(dt)
     if love.mouse.isDown(1) and
         gunBases[selectedWeapon] ~= nil and
         gunBases[selectedWeapon].weapon then
@@ -80,7 +83,6 @@ function  game.update(dt)
     if love.keyboard.isDown("d","right") then
         habitat.x = math.min(64-30+12,habitat.x + 10*dt)
     end
-    stars:update(dt)
     
     for i = #gamestate.entities.bullets,1,-1 do
         local v = gamestate.entities.bullets[i]
@@ -115,14 +117,13 @@ local viewport = require("ui.viewport")
 local vec2 = require("util.vec2")
 local bh = require("entities.enemies").black_hole
 
+local text = require("ui.text")
 local bhrender = false
 function  game.draw()
     viewport.beginRender()
-    love.graphics.draw(stars,0,-2)
+    background.draw()
     
     
-    
-    love.graphics.setColor(1,1,1)
     for i,v in ipairs(gamestate.entities.habitat) do
         if v.draw and not v.isDead then v:draw() end
     end
@@ -138,9 +139,9 @@ function  game.draw()
     
 
 
-
-    viewport.endRender()
     
+    viewport.endRender()
+
     bh:render()
     if bhrender then
         love.graphics.setCanvas(viewport.canvas)
@@ -149,6 +150,13 @@ function  game.draw()
         end
         love.graphics.setCanvas()
     end
+
+
+    
+    love.graphics.setCanvas(viewport.canvas)
+    text.printNumber(gamestate.player.money,62,2,4)
+    love.graphics.setCanvas()
+
     viewport.draw()
     
 
@@ -166,10 +174,9 @@ function game.mousereleased(x,y,b)
 end
 
 local upgrades = require("player.upgrades.auguments")
+local scene = require("util.state")
 function  game.keypressed(key)
-    if key == "b" then bhrender = not bhrender end
-    if key == "w" then upgrades.purchase("gun_firerate") end
-    if key == "e" then upgrades.purchase("gun_damage") end
+    if key == "b" then scene.set("shop") end
     if key == "space" then 
         gamestate.player.health = gamestate.player.health - 1
     end
@@ -180,34 +187,10 @@ function  game.keypressed(key)
 
     local old = selectedWeapon
     local currentWeapon = gunBases[old].weapon
-    if key == "1" then
-        if gunBases[0]:select() then
-            selectedWeapon = 0
-            currentWeapon.isSelected = false
-            currentWeapon:switchOff()
-        end
-    end
-    if key == "2" then
-        if gunBases[1]:select() then
-            selectedWeapon =1
-            currentWeapon.isSelected = false
-            currentWeapon:switchOff()
-        end
-    end
-    if key == "3" then
-        if gunBases[2]:select() then
-            selectedWeapon = 2
-            currentWeapon.isSelected = false
-            currentWeapon:switchOff()
-        end
-    end
-    if key == "4" then
-        if gunBases[3]:select() then
-            selectedWeapon = 2
-            currentWeapon.isSelected = false
-            currentWeapon:switchOff()
-        end
-    end
+    if key == "1" then selectGun(0) end
+    if key == "2" then selectGun(1) end
+    if key == "3" then selectGun(2) end
+    if key == "4" then selectGun(3) end
 
 
 end

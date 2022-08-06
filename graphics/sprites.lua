@@ -16,7 +16,8 @@ local sprites = {
     solar_flare = ln("graphics/Solar_Flare.png"),
     star = ln("graphics/star.png"),
     cannon_head_2 = ln("graphics/gun_cannon_head2.png"),
-    antimatter_cannon = ln("graphics/antimatter_cannon.png")
+    antimatter_cannon = ln("graphics/antimatter_cannon.png"),
+    button_atlas = love.graphics.newImage("graphics/menus/button_atlas.png")
 }
 
 

@@ -1,4 +1,4 @@
-local cannon = require("player.guns.gun"):extend()
+local cannon = require("entities.guns.gun"):extend()
 --cannon.head= love.graphics.newImage("graphics/gun_cannon_head.png")
 --cannon.barrel = love.graphics.newImage("graphics/gun_cannon_barrel.png")
 
@@ -12,7 +12,8 @@ cannon.sfx = {
 for i,v in ipairs(cannon.sfx) do
     v:setVolume(.3)
 end
-cannon.firerate =3
+
+
 function cannon.new()
     return setmetatable({
         barrelAngle = 0,
@@ -31,7 +32,7 @@ function cannon:shoot()
     local bx,by = self:calcBarrelPos()
     local bullet =  bullet.new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
-    self.cooldown = 1/cannon.firerate
+    self.cooldown = 1/gamestate.stats.cannon_firerate
 end
 
 return cannon

@@ -1,34 +1,36 @@
 local gamestate = require("gamestate")
 
-local guns = require("player.guns.cannon")
-local bullet = require("entities.bullet")
 local auguments = {
-    gun_firerate = {
+    cannon_firerate = {
         maxLevel = 10,
-        basenum = guns.firerate,
+      --  basenum = guns.firerate,
+        price = function (self)
+            return ((gamestate.upgrades["cannon_firerate"].level or 0)+1) * 100
+        end
     },
     gun_damage = {
 
         maxLevel = 10,
-        basenum = bullet.damage
+     --   basenum = bullet.damage,
+        price = function (self)
+            return ((gamestate.upgrades["gun_damage"] and gamestate.upgrades["gun_damage"].level or 0)+1) * 100
+        end
     },
 }
 
-function  auguments.gun_firerate.apply(level)
-    guns.firerate = auguments.gun_firerate.basenum
+function  auguments.cannon_firerate.apply(level)
+    local b = gamestate.base_stats.cannon_firerate
     for i = 0,level-1 do
-        guns.firerate = guns.firerate + 1*(auguments.gun_firerate.maxLevel-i)/(.75*auguments.gun_firerate.maxLevel)
+        b = b + .9*(auguments.cannon_firerate.maxLevel-i)/(.8*auguments.cannon_firerate.maxLevel)
     end
-    --print(level,(auguments.gun_firerate.maxLevel-level)/(.6*auguments.gun_firerate.maxLevel),guns.firerate)
+    gamestate.stats.cannon_firerate = b
+    print(level,b)
 end
 
 function  auguments.gun_damage.apply(level)
-    bullet.damage = auguments.gun_damage.basenum
-    for i = 0,level-1 do
-        bullet.damage = bullet.damage + .3*(auguments.gun_damage.maxLevel-i)/(.75*auguments.gun_damage.maxLevel)
-  
-    end
-   
+--    for i = 0,level-1 do
+  --      bullet.damage = bullet.damage + .3*(auguments.gun_damage.maxLevel-i)/(.75*auguments.gun_damage.maxLevel)
+    --end
 end
 
 function  auguments.purchase(name)
@@ -36,6 +38,7 @@ function  auguments.purchase(name)
     gamestate.upgrades[name] = gamestate.upgrades[name] or {level = 0}
     gamestate.upgrades[name].level = gamestate.upgrades[name].level + 1
     auguments[name].apply(gamestate.upgrades[name].level)
+    return true
 end
 
 return auguments

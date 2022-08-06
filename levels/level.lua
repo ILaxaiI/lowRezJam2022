@@ -5,14 +5,15 @@ level.loaded = {
     level3 = require("levels.level3"),
     level4 = require("levels.level4")
 }
-level.current = {next = "level1",duration = -1}
+level.current = {name = "intro",next = "level4",duration = 3,
+    songQueue = {},enemies = {}
+}
 
 
 local music = require("audio.music")
 
 local enemies = require("entities.enemies")
 local gamestate = require("gamestate")
-
 local soundQueue = music.source
 
 
@@ -29,7 +30,6 @@ function level.set(name)
     if not level.loaded[name] then return end
     level.current = level.loaded[name]
     for i,v in ipairs(level.loaded[name].songQueue) do
-        print(v)
         soundQueue:queue(music[v])
     end
 end

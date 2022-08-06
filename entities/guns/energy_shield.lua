@@ -1,4 +1,4 @@
-local shield  = require("player.guns.gun"):extend()
+local shield  = require("entities.guns.gun"):extend()
 shield.head= require("graphics.sprites").energy_shield_head
 
 shield.barrel = require("graphics.sprites").energy_shield_barrel

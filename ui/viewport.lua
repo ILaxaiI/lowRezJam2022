@@ -18,28 +18,17 @@ function  viewport.getOffset()
     
     return offsetx,offsety
 end
-local seed
-for i = 1,100 do seed = love.math.random() end
 
-local background = love.image.newImageData(64,64)
-
-for x = 0,63 do
-    for y = 0,63 do
-        background:setPixel(x,y,
-        .03*love.math.noise(x*.051,y*.02,seed)+.01*love.math.noise(x*.0921,y*.0932,seed)+.02*love.math.noise(x*.551,y*.5532,seed),
-        .04*love.math.noise(x*.012,y*.036,seed)+.03*love.math.noise(x*.0931,y*.0942,seed)+.02*love.math.noise(x*.571,y*.542,seed),
-        .06+.07*love.math.noise(x*.032,y*.022,seed)+.03*love.math.noise(x*.0911,y*.0932,seed+.03*love.math.noise(x*.5511,y*.532,seed))
-        
-    )
-    end
+function  viewport.translate(x,y)
+    local scale = viewport.scale    
+    return x/scale - viewport.offsetx,y/scale - viewport.offsety
 end
 
-background = love.graphics.newImage(background)
+
+
 function viewport.beginRender()
     love.graphics.setCanvas(viewport.canvas)
-
     love.graphics.clear(0,0,.1)
-    love.graphics.draw(background)
 end
 
 function  viewport.endRender()

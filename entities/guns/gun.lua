@@ -67,7 +67,7 @@ function gun:shoot()
     local bx,by = self:calcBarrelPos()
     local bullet =  bullet.new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
-    self.cooldown = .4
+    self.cooldown = 1/gamestate.stats.cannon_firerate
 end
 function  gun:mouseDown()
     if self.cooldown < 0 then

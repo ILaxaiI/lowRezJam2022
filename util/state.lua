@@ -13,4 +13,6 @@ function state.set(name,...)
 end
 
 
-return setmetatable(state,{__index = function (tab,key) return (state.list[state.current] and state.list[state.current][key]) or nul end})
+return setmetatable(state,{__index = function (tab,key) return (state.list[state.current] and state.list[state.current][key]) or nul end,
+    __tostring = function () return "state table"  end
+})

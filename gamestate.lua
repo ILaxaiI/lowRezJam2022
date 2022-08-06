@@ -25,6 +25,8 @@ end
 function gmst.default()
     gamestate.difficulty = 1
     gamestate.player = {
+        passive_income = 10,
+        money = 0,
         health = 10,
         maxHealth = 10,
         guns = {}
@@ -34,6 +36,14 @@ function gmst.default()
         entities = setmetatable({},entityMt),
         bullets = setmetatable({},entityMt)
     }
+    gamestate.base_stats = {
+        cannon_damage = 1,
+        cannon_firerate = 3
+    }
+    gamestate.stats = {}
+    for i,v in pairs(gamestate.base_stats) do
+        gamestate.stats[i] = v
+    end
     gamestate.upgrades = {}
     return setmetatable(gamestate,gmst)
 end

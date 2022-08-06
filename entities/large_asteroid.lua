@@ -2,27 +2,27 @@ local large_asteroid = require("entities.entity"):extend()
 --large_asteroid.sprite = require("graphics.sprites").asteroid
 
 large_asteroid.type = "asteroid"
-large_asteroid.damage = .5
+large_asteroid.damage = .05
 
 large_asteroid.collidewithplayer = true
 local ffi = require("ffi")
 
 
-local sizes ={8,16,24}
+local sizes ={16,24}
 
 large_asteroid.sizes = {
-    {
+--[[    {
         grid = love.filesystem.read("data","entities/large_asteroid_grids/asteroid_size_8"),
         ctype = ffi.typeof("uint8_t(*)[$]",sizes[1])
-    },
+    },]]
 
     {
         grid = love.filesystem.read("data","entities/large_asteroid_grids/asteroid_size_16"),
-        ctype = ffi.typeof("uint8_t(*)[$]",sizes[2])
+        ctype = ffi.typeof("uint8_t(*)[$]",sizes[1])
     },
     {
         grid = love.filesystem.read("data","entities/large_asteroid_grids/asteroid_size_24"),
-        ctype = ffi.typeof("uint8_t(*)[$]",sizes[3])
+        ctype = ffi.typeof("uint8_t(*)[$]",sizes[2])
     },
 }
 for i = 1,#sizes do
@@ -47,7 +47,7 @@ local function  getRandomWeigthedElement(ents)
        if val <= 0 then return v end
     end
 end
-local sizeWeights = {{1,.2},{2,.7},{3,.1}}
+local sizeWeights = {{1,.85},{2,.15}}
 function large_asteroid.new(max_size)
     local x,y = large_asteroid:getRandomSpawn()
     local size = getRandomWeigthedElement(sizeWeights)[1]
@@ -160,7 +160,7 @@ end
 local gamestate = require("gamestate")
 function  large_asteroid:impactPlayer(dt)
 
-    local player = gamestate.entities.habitat[1]
+    local player = gamestate.player.entity
     self:takeDamage(0,player)
     gamestate.player.health = gamestate.player.health - 1
     

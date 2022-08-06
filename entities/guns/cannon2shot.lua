@@ -1,4 +1,4 @@
-local cannon2 = require("player.guns.cannon"):extend()
+local cannon2 = require("entities.guns.cannon"):extend()
 local vec2 = require("util.vec2")
 
 function cannon2.new()
@@ -41,7 +41,7 @@ function cannon2:shoot()
     local bx1,by1,bx2,by2 = self:calcBarrelPos()
     gamestate.entities.bullets:insert(bullet.new(bx1,by1,self.barrelAngle-math.pi/2))
     gamestate.entities.bullets:insert(bullet.new(bx2,by2,self.barrelAngle-math.pi/2))
-    self.cooldown = 1.2/cannon2.firerate
+    self.cooldown =1.2/ gamestate.stats.cannon_firerate
 end
 
 

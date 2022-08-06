@@ -3,12 +3,14 @@ gunbase.__index =gunbase
 gunbase.type = "gunbase"
 gunbase.base = love.graphics.newImage("graphics/gun_base.png")
 
+gunbase.targetY = 44
 
 
 function gunbase.new(x)
     return setmetatable({
         x = x,
-        y = 44,
+        y = 67,
+        spawning = true,
         animT = love.math.random(0,10),
     },gunbase)
 end
@@ -18,8 +20,19 @@ function  gunbase:attach(weapon)
     weapon.parent = self
 end
 
+function  gunbase:spawned(dt)
+    if self.spawning and self.y > self.targetY then
+        self.y = self.y - 30*dt
+        if math.abs(self.targetY-self.y) < .5 then
+            self.y = self.targetY
+            self.spawning = false
+        end    
+    end
+
+end
+
 function  gunbase:update(dt)
-   -- self.animT = self.animT + dt*5
+    if self.spawning then self:spawned(dt) end
     if self.weapon then
         self.weapon:update(dt)
     end
