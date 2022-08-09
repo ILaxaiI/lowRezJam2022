@@ -1,4 +1,4 @@
-return {
+local l1 = {
     name = "level1",
     next = "level2",
     duration = 33,
@@ -12,3 +12,5 @@ return {
         {"asteroid",1,20}
     }
 }
+
+return l1

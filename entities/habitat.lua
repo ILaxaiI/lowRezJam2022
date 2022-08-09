@@ -9,14 +9,14 @@ habitat.aabbxo = 3
 
 habitat.__tostring = function() return "habitat" end
 
-function habitat.new()
+function habitat:new()
     return setmetatable({
         x =17,
         y = 47,
         animT = 0,
         payoutTimer = 0,
         etimer = 0,
-    },habitat)
+    },self)
 end
 
 local overlap = require("util.overlap")

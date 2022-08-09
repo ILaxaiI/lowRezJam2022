@@ -6,13 +6,13 @@ bullet.damage = 1
 bullet.w = 1
 bullet.h = 1
 bullet.explosionSize = 2
-function bullet.new(x,y,angle)
+function bullet:new(x,y,angle)
     return setmetatable({
         x = x,
         y = y,
         vx = bullet.speed*math.cos(angle),
         vy = bullet.speed*math.sin(angle)
-    },bullet)
+    },self)
 end
 
 

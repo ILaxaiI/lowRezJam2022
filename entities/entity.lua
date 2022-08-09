@@ -6,10 +6,12 @@ entity.damage = 0
 function  entity:extend()
     local e = {health = 0}
     e.__index = e
-    return setmetatable(e,entity)
+    return setmetatable(e,self)
 end
 
-function  entity:die()
+local gamestate = require("gamestate")
+function  entity:die(payout)
+    if payout and self.money then gamestate.player.money = gamestate.player.money + self.money end
     self.isDead = true
 end
 
@@ -22,7 +24,6 @@ end
 
 entity.spawnRegions = {{0,-5,60,-5}}
 
-local gamestate = require("gamestate")
 -- Called only if player collides with the object
 function  entity:impactPlayer()
     self:die()
@@ -31,7 +32,7 @@ end
 
 function entity:takeDamage(dmg)
     self.health = self.health - dmg
-    if self.health <= 0 then self:die() end
+    if self.health <= 0 then self:die(true) end
 end
 
 local overlap = require("util.overlap")

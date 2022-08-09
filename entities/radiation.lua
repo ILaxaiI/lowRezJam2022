@@ -6,7 +6,7 @@ radiation.h = 10
 radiation.damage = 1
 radiation.collidewithplayer = true
 
-function radiation.new(speed)
+function radiation:new(speed)
    
     local x,y = radiation:getRandomSpawn()
     return setmetatable({
@@ -15,7 +15,7 @@ function radiation.new(speed)
         vx = 0,
         vy = speed,
         health = 5,
-    },radiation)
+    },self)
 end
 
 

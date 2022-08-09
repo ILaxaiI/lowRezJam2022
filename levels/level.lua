@@ -1,12 +1,10 @@
 local level = {}
 level.loaded = {
-    [0] = {name = "intro",next = "level1",duration = 3,
-    songQueue = {},enemies = {}
-    },
-    level1 = require("levels.level1"),
-    level2 = require("levels.level2"),
-    level3 = require("levels.level3"),
-    level4 = require("levels.level4")
+    [0] = require("levels.tutorial"),
+--    level1 = require("levels.level1"),
+--    level2 = require("levels.level2"),
+--    level3 = require("levels.level3"),
+--    level4 = require("levels.level4")
 }
 
 local gamestate = require("gamestate")
@@ -14,7 +12,6 @@ level.current = level.loaded[gamestate.currentLevel]
 
 
 local music = require("audio.music")
-
 local enemies = require("entities.enemies")
 local soundQueue = music.source
 
@@ -31,30 +28,100 @@ end
 level.timer = 0
 level.nextSpawnTime = 0
 local spawnTimer = 1
+
+
+
 function level.set(name)
-    if not level.loaded[name] then return end
+    if not level.loaded[name] then print("level does not exist") return end
+    gamestate.currentSection = 1
     level.current = level.loaded[name]
     gamestate.currentLevel = level.current
     level.timer = 0
-    soundQueue:stop()
-    for i,v in ipairs(level.loaded[name].songQueue) do
-        soundQueue:queue(music[v])
+
+end
+local compare = {
+    AND = function (a,b)
+        return a and b
+    end,
+    OR = function (a,b)
+        return a or b
     end
-    soundQueue:play()
+}
+
+local prog = {
+    progress = function (data)
+        local bool
+        for i,v in ipairs(data) do
+            if bool == nil then
+                bool =gamestate.progressFlags[v]
+            else
+                bool = compare[data.op](bool,gamestate.progressFlags[v])
+            end
+        end
+        return bool
+    end,
+    duration = function (data)
+        return level.timer >= data
+    end
+}
+
+local loop = {
+    duration = function (data)
+        return level.timer >= data
+    end
+}
+
+function level.progress(section)
+
+    for i,v in pairs(section.advance) do
+        if prog[i] and prog[i](v) then
+            if level.current.sections[gamestate.currentSection+1] then
+                gamestate.currentSection = gamestate.currentSection + 1
+                level.timer = 0
+            else
+                level.set(level.current.next)
+            end
+        end
+    end
+
+
+
+    if not section.loop then return end
+    for i,v in pairs(section.loop) do
+        if loop[i] and loop[i](v) then
+            level.timer = 0
+        end
+    end
 end
 
 function  level.update(dt)
+    local section = level.current.sections[gamestate.currentSection]
+  
+    if section.randomEnemies then
+        level.spawnRandomEntities(section,dt)
+    end
+    if section.enemies then
+    for i,v in ipairs(section.enemies) do
+        for i2,v2 in ipairs(v.spawns) do
+            if level.timer <= v2.t and level.timer+dt >= v2.t then
+                local enemy = enemies[v.name]:new(v2.sv)
+                
+                enemy.x = v2.x
+                enemy.y = v2.y
+
+                gamestate.entities.entities:insert(enemy)
+            end
+        end
+    end
+end
+
     level.timer = level.timer +dt
-    level.spawnEntities(dt)
-    if level.current.update then
-        level.current:update(dt)
-    end
+    level.progress(section)
 
-
-    if level.timer > level.current.duration+1 then
-        level.set(level.current.next)
-        soundQueue:play()
-    end
+--    if level.timer > level.current.duration+1 then
+--        level.set(level.current.next)
+--        soundQueue:play()
+--    end
 end
 
 function level.draw()
@@ -63,15 +130,15 @@ function level.draw()
     end
 end
 
-function  level.spawnEntities(dt)
+function  level.spawnRandomEntities(section,dt)
     spawnTimer = spawnTimer - dt
     if spawnTimer <= 0 then
-        local enemy = getRandomWeigthedElement(level.current.enemies)
+        local enemy = getRandomWeigthedElement(section.randomEnemies)
         if enemy then
             local x = love.math.random()*64
             if not enemies[enemy[1]] then print("enemy not found") else
-            gamestate.entities.entities:insert(enemies[enemy[1]].new(enemy[3]))
-            spawnTimer = love.math.random()*(level.current.maxSpawnTime-level.current.minSpawnTime) + level.current.minSpawnTime
+            gamestate.entities.entities:insert(enemies[enemy[1]]:new(enemy[3]))
+            spawnTimer = love.math.random()*(section.maxSpawnTime-section.minSpawnTime) + section.minSpawnTime
             end
         end
     end

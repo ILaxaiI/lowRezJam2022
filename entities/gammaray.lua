@@ -6,7 +6,7 @@ local iw,ih = gammaray.sprite:getDimensions()
 
 local animation = require("util.animation")
 
-gammaray.warningAnim = animation.new(
+gammaray.warningAnim = animation:new(
     gammaray.sprite,
     {[0] = nq(0,11,10,10,iw,ih),nq(11,11,10,10,iw,ih),nq(22,11,10,10,iw,ih),
     nq(33,11,10,10,iw,ih),nq(44,11,10,10,iw,ih),nq(44,11,10,10,iw,ih)},
@@ -27,7 +27,7 @@ gammaray.warningAnim:setCallback("onEnd",function (anim,self)
     self.playing = self.shootAnim
 end)
 
-gammaray.shootAnim = animation.new(
+gammaray.shootAnim = animation:new(
     gammaray.sprite,
     {[0] = nq(0,0,22,10,iw,ih),nq(22,0,22,10,iw,ih), nq(44,0,22,10,iw,ih),nq(66,0,22,10,iw,ih)},
     {{d = .10, quadId = 0,ox = 0,oy = 0,r = 0,sx = 1,sy = 20},
@@ -69,7 +69,7 @@ end)
 
 gammaray.damage =3
 gammaray.spawnRegions = {{5,-5,15,-5},{55,-5,59,-5}}
-function  gammaray.new()
+function  gammaray:new()
 
     local x,y = gammaray:getRandomSpawn()
     local fl = {
@@ -84,7 +84,7 @@ function  gammaray.new()
  
     fl.warningAnim.args = {onEnd = fl}
     fl.shootAnim.args = {onFrame = fl,onStart = fl,onEnd = fl}
-    return setmetatable(fl,gammaray)
+    return setmetatable(fl,self)
 end 
 
 

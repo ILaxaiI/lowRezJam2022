@@ -7,21 +7,21 @@ local animation = require("util.animation")
 local background = require("ui.background")
 
 local selectedWeapon = 0
-local gunSpawns = {3,14,44,55}
 
 
 
 function  game.reset()
     gamestate.default()
-    gamestate.player.entity = require("entities.habitat").new()
-    gamestate.guns = {
-        [0]= require("entities.gunbase").new(gunSpawns[1])
-    }
-    gamestate.guns[0]:attach(require("entities.guns.cannon").new())
-    gamestate.guns[0]:select()
+    gamestate.player.entity = require("entities.habitat"):new()
+ 
 end
+local music = require("audio.music")
+local musicVolume = 0
+local musicPrevol
 
-function game.init(_,reset)
+function game.init(_,reset) 
+    musicVolume = 0
+    musicPrevol = music.source:getVolume()
     if reset or not gamestate.player.entity then
         print("reset")
         game.reset()
@@ -33,11 +33,13 @@ end
 
 local function  selectGun(new)
     local old = selectedWeapon
-    local currentWeapon = gamestate.guns[old].weapon
+    local currentWeapon = gamestate.guns[old] and gamestate.guns[old].weapon
     if  gamestate.guns[new] and gamestate.guns[new]:select() then
         selectedWeapon = new
-        currentWeapon.isSelected = false
-        currentWeapon:switchOff()
+        if currentWeapon then
+            currentWeapon.isSelected = false
+            currentWeapon:switchOff()
+        end
     end
 end
 
@@ -49,6 +51,12 @@ end
 
 
 function  game.update(dt)
+       
+    musicVolume = musicVolume+dt
+    local vol = math.lerpc(musicPrevol,music.volume,musicVolume)
+
+    music.source:setVolume(vol)
+
     level.update(dt)
     animation.updateDetached(dt)
     
@@ -60,10 +68,10 @@ function  game.update(dt)
     end
 
     if love.keyboard.isDown("a","left") then
-        gamestate.player.entity.x = math.max(-12,gamestate.player.entity.x - 10*dt)
+        gamestate.player.entity.x = math.max(-12,gamestate.player.entity.x - 15*dt)
     end
     if love.keyboard.isDown("d","right") then
-        gamestate.player.entity.x = math.min(64-30+12,gamestate.player.entity.x + 10*dt)
+        gamestate.player.entity.x = math.min(64-30+12,gamestate.player.entity.x + 15*dt)
     end
     
     for i = #gamestate.entities.bullets,1,-1 do
@@ -78,9 +86,12 @@ function  game.update(dt)
     gamestate.player.entity:update(dt)
 
     for i = #gamestate.guns,0,-1 do
+  
         local v = gamestate.guns[i]
-        if v.update and not v.isDead  then v:update(dt) end
+        if v and v.update and not v.isDead  then v:update(dt) end
+      
     end
+
     if gamestate.player.health <= 0 then
         scene.set("gameOver")
         require("entities.enemies").black_hole.clear()
@@ -101,8 +112,16 @@ end
 local viewport = require("ui.viewport")
 local vec2 = require("util.vec2")
 local bh = require("entities.enemies").black_hole
-local text = require("ui.text")
+local text = require("ui.elements.text")
 local bhrender = false
+
+local ndisp = require("ui.elements.money_display"):new(gamestate.player.money,62,2)
+
+local tutorial = {
+    movement_prompt = text:new("[A/Left arrow]\n[d/Right arrow]\nto move",2,20),
+    shop_prompt = text:new("[B] to open shop ",2,20),
+
+}
 
 function  game.draw()
     viewport.beginRender()
@@ -111,7 +130,7 @@ function  game.draw()
     gamestate.player.entity:draw(dt)
     for i = #gamestate.guns,0,-1 do
         local v = gamestate.guns[i]
-        if v.draw and not v.isDead  then v:draw() end
+        if v and v.draw and not v.isDead  then v:draw() end
     end
     for i,v in ipairs(gamestate.entities.entities) do
         if v.draw and not v.isDead then v:draw() end
@@ -133,14 +152,23 @@ function  game.draw()
     end
 
     love.graphics.setCanvas(viewport.canvas)
-    love.graphics.print(gamestate.player.money,62-text.font:getWidth(gamestate.player.money),2)
+    ndisp.n = tostring(gamestate.player.money)
+    ndisp:draw()
+    if level.current.name == "tutorial" then
+        if gamestate.currentSection == 1 then
+            tutorial.movement_prompt:draw()
+        elseif gamestate.currentSection == 2 then
+            tutorial.shop_prompt:draw()
+        end
+
+    end
     love.graphics.setCanvas()
 
     viewport.draw()
     
 
     -- DEBUG STUFF
-    love.graphics.print(level.current.name,0,15)
+    love.graphics.print(level.current.name.." "..gamestate.currentSection,0,15,0,4)
 end
 
 function game.mousereleased(x,y,b)
@@ -153,8 +181,8 @@ end
 
 
 function  game.keypressed(key)
-    if key == "b" then scene.set("shop") end
-
+    if gamestate.progressFlags.tutorial_asteroid_dodged and
+    key == "b" then scene.set("shop") end
     if key == "1" then selectGun(0) end
     if key == "2" then selectGun(1) end
     if key == "3" then selectGun(2) end

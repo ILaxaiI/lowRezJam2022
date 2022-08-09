@@ -1,5 +1,15 @@
 love.graphics.setDefaultFilter("nearest","nearest")
 
+
+require("ui.elements.text")
+
+function  math.lerp(a,b,t)
+    return (a * (1.0 - t)) + (b * t)
+end
+function math.lerpc (a, b, t)
+    return math.max(a,math.min(b,math.lerp(a,b,t)))
+end
+
 local viewport = require("ui.viewport")
 viewport.scale = viewport.getScale()
 viewport.offsetx,viewport.offsety = viewport.getOffset()
@@ -19,15 +29,18 @@ state.set("mainmenu")
 
 function  love.draw()
     state.draw()
-    
     love.graphics.print(love.timer.getFPS())
 end
 
 function  love.update(dt)
+    dt = math.min(dt,1/60)
     state.update(dt)
 end
+local music = require("audio.music")
 
+local filter = true
 function  love.keypressed(key)
+
     state.keypressed(key)
 end
 
@@ -44,7 +57,6 @@ end
 
 
 function  love.resize()
-    print(love.graphics.getWidth(),love.graphics.getHeight())
     viewport.scale = viewport.getScale()
     viewport.offsetx,viewport.offsety = viewport.getOffset()
 end

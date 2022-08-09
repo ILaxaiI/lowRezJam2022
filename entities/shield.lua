@@ -6,14 +6,14 @@ shield.line = {x1=0,y1=1,x2=11,y2=1}
 shield.hp = 12
 
 
-function shield.new(x,y,angle)
+function shield:new(x,y,angle)
     return setmetatable({
         x = x,
         y = y,
         health = 12,
         hybernate = false,
         damage = 1,
-        angle = angle},shield)
+        angle = angle},self)
 end
 
 

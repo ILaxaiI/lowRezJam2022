@@ -27,7 +27,7 @@ function gmst.default()
     gamestate.difficulty = 1
     gamestate.player = {
         passive_income = 10,
-        money = 0,
+        money = 10000,
         health = 20,
         maxHealth = 10,
         guns = {},
@@ -44,15 +44,17 @@ function gmst.default()
     }
     gamestate.guns = {
         [0] =nil
-
     }
     gamestate.stats = {}
 
     gamestate.currentLevel = 0
-
+    gamestate.currentSection = 1
+    gamestate.progressFlags = {}
     for i,v in pairs(gamestate.base_stats) do
         gamestate.stats[i] = v
     end
+  
+
     gamestate.upgrades = {}
 end
 

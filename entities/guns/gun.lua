@@ -14,7 +14,13 @@ function gun:extend()
     return setmetatable(g,self)
 end
 
-
+function gun:new()
+    return setmetatable({
+        barrelAngle = 0,
+        cooldown = 0,
+        isSelected = false,
+    },self)
+end
 local viewport = require("ui.viewport")
 
 function gun:updateAngle(dt)
@@ -65,7 +71,7 @@ local bullet = require("entities.bullet")
 
 function gun:shoot()
     local bx,by = self:calcBarrelPos()
-    local bullet =  bullet.new(bx,by,self.barrelAngle-math.pi/2)
+    local bullet =  bullet:new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
     self.cooldown = 1/gamestate.stats.cannon_firerate
 end

@@ -61,7 +61,7 @@ function black_hole.clear()
     holes = {}
 end
 
-function black_hole.new(speed) 
+function black_hole:new(speed) 
     local x,y = black_hole:getRandomSpawn()
     local hole = {
         x = x,
@@ -71,7 +71,7 @@ function black_hole.new(speed)
         vy = speed,
     }
     holes[#holes+1] = hole
-    return setmetatable(hole,black_hole)
+    return setmetatable(hole,self)
 end
 
 function  black_hole:draw() 

@@ -1,13 +1,7 @@
 local cannon2 = require("entities.guns.cannon"):extend()
 local vec2 = require("util.vec2")
 
-function cannon2.new()
-    return setmetatable({
-        barrelAngle = 0,
-        cooldown = 0,
-        isSelected = false,
-    },cannon2)
-end
+
 
 local viewport = require("ui.viewport")
 cannon2.head = require("graphics/sprites").cannon_head_2
@@ -39,8 +33,8 @@ function cannon2:shoot()
     self.sfx[sfx]:play()
 
     local bx1,by1,bx2,by2 = self:calcBarrelPos()
-    gamestate.entities.bullets:insert(bullet.new(bx1,by1,self.barrelAngle-math.pi/2))
-    gamestate.entities.bullets:insert(bullet.new(bx2,by2,self.barrelAngle-math.pi/2))
+    gamestate.entities.bullets:insert(bullet:new(bx1,by1,self.barrelAngle-math.pi/2))
+    gamestate.entities.bullets:insert(bullet:new(bx2,by2,self.barrelAngle-math.pi/2))
     self.cooldown =1.2/ gamestate.stats.cannon_firerate
 end
 

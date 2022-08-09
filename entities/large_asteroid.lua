@@ -48,7 +48,7 @@ local function  getRandomWeigthedElement(ents)
     end
 end
 local sizeWeights = {{1,.85},{2,.15}}
-function large_asteroid.new(max_size)
+function large_asteroid:new(max_size)
     local x,y = large_asteroid:getRandomSpawn()
     local size = getRandomWeigthedElement(sizeWeights)[1]
     local a = {
@@ -64,7 +64,7 @@ function large_asteroid.new(max_size)
     a.h = a.size
     a.gridptr = ffi.cast(large_asteroid.sizes[size].ctype,a.grid:getFFIPointer())
     
-    return setmetatable(a,large_asteroid)
+    return setmetatable(a,self)
 end
 
 

@@ -6,7 +6,7 @@ local iw,ih = solarflare.sprite:getDimensions()
 
 local animation = require("util.animation")
 
-solarflare.warningAnim = animation.new(
+solarflare.warningAnim = animation:new(
     solarflare.sprite,
     {[0] = nq(0,11,10,10,iw,ih),nq(11,11,10,10,iw,ih),nq(22,11,10,10,iw,ih),
     nq(33,11,10,10,iw,ih),nq(44,11,10,10,iw,ih),nq(44,11,10,10,iw,ih)},
@@ -27,7 +27,7 @@ solarflare.warningAnim:setCallback("onEnd",function (anim,self)
     self.playing = self.shootAnim
 end)
 
-solarflare.shootAnim = animation.new(
+solarflare.shootAnim = animation:new(
     solarflare.sprite,
     {[0] = nq(0,0,10,10,iw,ih),nq(11,0,10,10,iw,ih), nq(22,0,10,10,iw,ih),nq(33,0,10,10,iw,ih)},
     {{d = .08, quadId = 0,ox = 0,oy = 0,r = 0,sx = 1,sy = 20},
@@ -68,7 +68,7 @@ end)
 
 solarflare.damage =1.6
 solarflare.spawnRegions = {{5,-5,25,-5},{40,-5,51,-5}}
-function  solarflare.new(warnings)
+function  solarflare:new(warnings)
     local x,y = solarflare:getRandomSpawn()
     local fl = {
         x = x,
@@ -82,7 +82,7 @@ function  solarflare.new(warnings)
     fl.warningAnim:setLoop(warnings)
     fl.warningAnim.args = {onEnd = fl}
     fl.shootAnim.args = {onFrame = fl,onStart = fl,onEnd = fl}
-    return setmetatable(fl,solarflare)
+    return setmetatable(fl,self)
 end
 
 

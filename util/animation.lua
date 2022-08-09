@@ -21,7 +21,7 @@ animation.__index = animation
         sy
     }
 ]]
-function  animation.new(sprite,quads,frames)
+function  animation:new(sprite,quads,frames)
     local duration = 0
     for i,v in ipairs(frames) do
         duration = duration + v.d
@@ -112,6 +112,7 @@ function  animation:removeDetached()
     end
 
 end
+
 
 function  animation:startDetached(x,y)
     self.ox = x

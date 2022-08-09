@@ -8,17 +8,17 @@ local button = require("ui.elements.button")
 local gamestate = require("gamestate")
 
 function mainmenu.init()
-    habitat = require("entities.habitat").new()
+    habitat = require("entities.habitat"):new()
 end
 
 local buttons = {
-        button.new(
-        buttonSprite,
-        {love.graphics.newQuad(0,0,48,16,iw,ih),love.graphics.newQuad(0,17,48,16,iw,ih)},
-        8,16,48,16,
-        function ()
-            state.set("game",habitat);
-        end)
+    button:new(
+    buttonSprite,
+    {love.graphics.newQuad(0,0,48,16,iw,ih),love.graphics.newQuad(0,17,48,16,iw,ih)},
+    8,16,48,16,
+    function ()
+        state.set("game",habitat);
+    end)
 }
 
 local background = require("ui.background")
@@ -30,7 +30,6 @@ function  mainmenu.update(dt)
 end
 
 local viewport = require("ui.viewport")
-
 
 
 

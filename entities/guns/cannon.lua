@@ -14,13 +14,6 @@ for i,v in ipairs(cannon.sfx) do
 end
 
 
-function cannon.new()
-    return setmetatable({
-        barrelAngle = 0,
-        cooldown = 0,
-        isSelected = false,
-    },cannon)
-end
 
 local gamestate = require("gamestate")
 local bullet = require("entities.bullet")
@@ -30,7 +23,7 @@ function cannon:shoot()
     self.sfx[sfx]:stop()
     self.sfx[sfx]:play()
     local bx,by = self:calcBarrelPos()
-    local bullet =  bullet.new(bx,by,self.barrelAngle-math.pi/2)
+    local bullet =  bullet:new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
     self.cooldown = 1/gamestate.stats.cannon_firerate
 end

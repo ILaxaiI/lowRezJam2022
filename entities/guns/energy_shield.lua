@@ -6,14 +6,8 @@ shield.barrelWidth = shield.barrel:getWidth()
 shield.barrelHeight = shield.barrel:getHeight()
 shield.headHeight = shield.head:getHeight()
 shield.cd = 4
-function shield.new()
-    return setmetatable({
-        barrelAngle = 0,
-        cooldown = 0,
-        isSelected = false,
-   
-    },shield)
-end
+
+
 
 local shieldEntity = require("entities.shield")
 local gamestate = require("gamestate")
@@ -43,7 +37,7 @@ function  shield:mouseDown()
     my = my/scale - offsety
 
     if not activeShield then
-        activeShield = shieldEntity.new(mx,my,self.barrelAngle)
+        activeShield = shieldEntity:new(mx,my,self.barrelAngle)
         activeShield.parent = self
         gamestate.entities.bullets:insert(activeShield)
     elseif activeShield then

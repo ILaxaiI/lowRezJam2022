@@ -2,7 +2,7 @@ local animation = require("util.animation")
 local esp = require("graphics.sprites").explosion
 local iw,ih = esp:getDimensions()
 local nq = love.graphics.newQuad
-local explosion = animation.new(esp,
+local explosion = animation:new(esp,
 {nq(0,0,10,10,iw,ih),nq(11,0,10,10,iw,ih),nq(22,0,10,10,iw,ih),
 nq(33,0,10,10,iw,ih),nq(44,0,10,10,iw,ih),nq(55,0,10,10,iw,ih),},
 {
