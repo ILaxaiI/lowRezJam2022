@@ -1,5 +1,5 @@
 local mainmenu = {}
-local buttonSprite = love.graphics.newImage("graphics/menus/play_button.png")
+local buttonSprite = require("graphics.sprites").play_button
 local state = require("util.state")
 local iw,ih = buttonSprite:getWidth(),buttonSprite:getHeight()
 

@@ -1,4 +1,4 @@
-local tutorial_asteroid = require("entities.asteroid"):extend()
+local tutorial_asteroid = require("entities.objects.asteroid"):extend()
 
 local gamestate = require("gamestate")
 
@@ -6,7 +6,6 @@ function  tutorial_asteroid:update(dt)
     self.y = self.y + dt*self.vy
     self.x = self.x + dt*self.vx
 
-    print(self.y)
 
     if self.y > 64 then
         self.isDead = true

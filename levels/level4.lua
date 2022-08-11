@@ -1,16 +1,18 @@
 return {
-    next = "level4",
+    next = "level5",
     name = "level4",
-    duration = 22*5,
+    sections = {{
+        advance = {duration = 45},
     songQueue = {
-        "part2","part2","part2","part2","part2"
+        "loop2","loop2","loop2","loop2",
     },
     
     
     minSpawnTime = .8,
-    maxSpawnTime = 2,
+    maxSpawnTime = 2.2,
 
-    enemies = {
-        {"asteroid",.55,3},{"large_asteroid",.15,2},{"black_hole",.0525,12},{"radiation",.05,24},{"gamma_ray",.05,10},{"solar_flare",.125,10}
+    randomEnemies = {
+        {"asteroid",.55,24},{"large_asteroid",.1,1},{"radiation",.25,24},{"solar_flare",.1,10}
     }
+    }}
 }

@@ -9,6 +9,7 @@ local sprites = {
     gamma_ray_burst = ln("graphics/Gamma_Ray_Burst.png"),
     gun_base = ln("graphics/gun_base.png"),
     gun_cannon_barrel = ln("graphics/gun_cannon_barrel.png"),
+    antimatter_barrel = ln("graphics/antimatter_cannon.png"),
     gun_cannon_head = ln("graphics/gun_cannon_head.png"),
     habitat_wide = ln("graphics/Habitat_wide.png"),
     habitat = ln("graphics/Habitat.png"),
@@ -17,8 +18,9 @@ local sprites = {
     star = ln("graphics/star.png"),
     cannon_head_2 = ln("graphics/gun_cannon_head2.png"),
     antimatter_cannon = ln("graphics/antimatter_cannon.png"),
-    button_atlas = love.graphics.newImage("graphics/menus/button_atlas.png"),
-   
+    button_atlas = ln("graphics/menus/button_atlas.png"),
+    play_button = ln("graphics/menus/play_button.png"),
+    ship_atlas = ln("graphics/alien_small_ships.png")
 }
 
 

@@ -16,8 +16,8 @@ function  healthbar:draw(x,y)
     x = x or 0
     y = y or 0
     
-    local hpsize = math.max(gamestate.player.health/gamestate.player.maxHealth*20,0)
-    quad:setViewport(0,0,hpsize/2,1,2,1)
+    local hpsize = math.max(20 * gamestate.player.health/gamestate.player.maxHealth,0)
+    quad:setViewport(0,0,hpsize,1,2,1)
     love.graphics.draw(self.sprites.hp,quad,x+2,y)
 
 end

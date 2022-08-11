@@ -1,9 +1,9 @@
 local habitat = require("entities.entity"):extend()
-habitat.__index = habitat
+--habitat.__index = habitat
 habitat.sprite = require("graphics.sprites").habitat_wide
 habitat.type = "habitat"
 habitat.w = 24--26
-habitat.h = 7--7
+habitat.h = 4--7
 habitat.aabbyo = 7
 habitat.aabbxo = 3
 
@@ -29,13 +29,6 @@ local animations = require("util.animation")
 
 
 
-habitat.sfx = {
-    love.audio.newSource("audio/sfx/explosion.wav","static"),
-    love.audio.newSource("audio/sfx/8bit_bomb_explosion.wav","static"),
-}
-habitat.sfx[1]:setVolume(.15)
-habitat.sfx[2]:setVolume(.15)
-
 
 function  habitat:update(dt)
 
@@ -47,6 +40,8 @@ function  habitat:update(dt)
             gamestate.player.money = gamestate.player.money + gamestate.player.passive_income
             self.payoutTimer = self.payoutTimer - 5
         end
+
+        gamestate.player.health = gamestate.player.health + dt*gamestate.stats.player_regen
 
         for i,ent in ipairs(gamestate.entities.entities) do
             if (ent.collidewithplayer) and not ent.isDead and
@@ -60,12 +55,6 @@ function  habitat:update(dt)
         if self.etimer <= 0 then
         animations.startDetached(ex[love.math.random(1,2)]:create(),self.x + love.math.random(0,self.w),self.y+love.math.random(self.h))
         self.etimer = love.math.random()*.2+.2
-            
-        local sfx = love.math.random(1,2)
-        habitat.sfx[sfx]:stop()
-        habitat.sfx[sfx]:setPitch((.9*love.math.random())+.4)
-        habitat.sfx[sfx]:play()
-
 
         end
     end

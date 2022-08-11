@@ -17,11 +17,11 @@ large_asteroid.sizes = {
     },]]
 
     {
-        grid = love.filesystem.read("data","entities/large_asteroid_grids/asteroid_size_16"),
+        grid = love.filesystem.read("data","entities/objects/large_asteroid_grids/asteroid_size_16"),
         ctype = ffi.typeof("uint8_t(*)[$]",sizes[1])
     },
     {
-        grid = love.filesystem.read("data","entities/large_asteroid_grids/asteroid_size_24"),
+        grid = love.filesystem.read("data","entities/objects/large_asteroid_grids/asteroid_size_24"),
         ctype = ffi.typeof("uint8_t(*)[$]",sizes[2])
     },
 }
@@ -50,7 +50,7 @@ end
 local sizeWeights = {{1,.85},{2,.15}}
 function large_asteroid:new(max_size)
     local x,y = large_asteroid:getRandomSpawn()
-    local size = getRandomWeigthedElement(sizeWeights)[1]
+    local size = max_size == 1 and 1 or getRandomWeigthedElement(sizeWeights)[1]
     local a = {
         x = x,
         y = y,
@@ -85,13 +85,15 @@ large_asteroid.sfx[2]:setVolume(.1)
 local explosion = require("graphics.animations.explosion")
 local animation = require("util.animation")
 
+local gamestate = require("gamestate")
 
 
 local overlap = require("util.overlap")
 
 function large_asteroid.overlap(e1,e2)
+
     if not overlap.aabb(e1.x,e1.y,e1.w,e1.h,e2.x,e2.y,e2.size,e2.size) then return end
- 
+    
     local ex = math.floor(e1.x + (e1.aabbxo or 0) - e2.x)
     local ey = math.floor(e1.y + (e1.aabbyo or 0) - e2.y)
 
@@ -104,7 +106,6 @@ function large_asteroid.overlap(e1,e2)
         end
         end
     end
-
 end
 
 
@@ -114,8 +115,8 @@ function  large_asteroid:takeDamage(dmg,ent)
        
         local minx,maxx = math.floor(ent.explosionSize-1),math.floor(ent.explosionSize+1.5)
         local miny,maxy = math.floor(ent.explosionSize-1),math.floor(ent.explosionSize+1.5)
-        local ex = math.floor(ent.x +ent.w/2- self.x +.5)
-        local ey = math.floor(ent.y + ent.h/2 - self.y+.5)
+        local ex = math.floor(ent.x + (ent.aabbxo or 0) + ent.w/2 - self.x +.5)
+        local ey = math.floor(ent.y + (ent.aabbyo or 0) + ent.h/2 - self.y +.5)
         local destroyed = 0
         for x = ex - minx, ex + maxx do
             if x>= 0 and x < self.size then
@@ -125,6 +126,7 @@ function  large_asteroid:takeDamage(dmg,ent)
                 if y >= 0 and  y < self.size and self.gridptr[x][y] > 0 and math.sqrt(dx*dx+dy*dy) <= ent.explosionSize then
                     self.gridptr[x][y] = 0
                     destroyed = destroyed + 1
+                    gamestate.player.money = gamestate.player.money + 10
                 end
             end
         end
@@ -142,6 +144,7 @@ function  large_asteroid:takeDamage(dmg,ent)
                 if y >= 0 and  y < self.size and self.gridptr[x][y] ~= 0 then
                     self.gridptr[x][y] = 0
                     self.tileCount = self.tileCount - 1
+                    gamestate.player.money = gamestate.player.money + 10
                 end
             end
         end

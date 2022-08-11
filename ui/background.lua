@@ -22,9 +22,9 @@ for i = 1,100 do seed = love.math.random() end
 for x = 0,63 do
     for y = 0,63 do
         backcanv:setPixel(x,y,
-        .03*love.math.noise(x*.051,y*.02,seed)+.01*love.math.noise(x*.0921,y*.0932,seed)+.02*love.math.noise(x*.551,y*.5532,seed),
-        .04*love.math.noise(x*.012,y*.036,seed)+.03*love.math.noise(x*.0931,y*.0942,seed)+.02*love.math.noise(x*.571,y*.542,seed),
-        .06+.07*love.math.noise(x*.032,y*.022,seed)+.03*love.math.noise(x*.0911,y*.0932,seed+.03*love.math.noise(x*.5511,y*.532,seed))
+        .035*love.math.noise(x*.051,y*.02,seed)+.015*love.math.noise(x*.0921,y*.0932,seed)+.025*love.math.noise(x*.551,y*.5532,seed),
+        .045*love.math.noise(x*.012,y*.036,seed)+.035*love.math.noise(x*.0931,y*.0942,seed)+.025*love.math.noise(x*.571,y*.542,seed),
+        .06+.075*love.math.noise(x*.032,y*.022,seed)+.035*love.math.noise(x*.0911,y*.0932,seed+.035*love.math.noise(x*.5511,y*.532,seed))
         
     )
     end

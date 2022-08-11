@@ -48,8 +48,8 @@ function  animation:setCallback(name,funk,args)
     
     self.callbacks[name] = funk
     self.args[name] = args
-
 end
+
 function animation:call(callback,...)
     if self.callbacks and self.callbacks[callback] then
         self.callbacks[callback](self,self.args[callback],...)

@@ -13,10 +13,14 @@ for i,v in ipairs(cannon.sfx) do
     v:setVolume(.3)
 end
 
+cannon.barrel = require("graphics.sprites").antimatter_barrel
+cannon.barrelOffsetX = 2.5
+cannon.barrelOffsetY = -1.5
 
-
+cannon.barrelWidth = cannon.barrel:getWidth()
+cannon.barrelHeight = cannon.barrel:getHeight()
 local gamestate = require("gamestate")
-local bullet = require("entities.bullets.bullet")
+local bullet = require("entities.bullets.antimatter_bullet")
 function cannon:shoot()
 
     local sfx = love.math.random(1,#self.sfx)
@@ -25,7 +29,7 @@ function cannon:shoot()
     local bx,by = self:calcBarrelPos()
     local bullet =  bullet:new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
-    self.cooldown = 1/gamestate.stats.cannon_firerate
+    self.cooldown = 2
 end
 
 return cannon

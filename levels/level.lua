@@ -1,10 +1,14 @@
 local level = {}
 level.loaded = {
     [0] = require("levels.tutorial"),
---    level1 = require("levels.level1"),
---    level2 = require("levels.level2"),
---    level3 = require("levels.level3"),
---    level4 = require("levels.level4")
+    level1 = require("levels.level1"),
+    level2 = require("levels.level2"),
+    level3 = require("levels.level3"),
+    level4 = require("levels.level4"),
+    level5 = require("levels.level5"),
+    level6 = require("levels.level6"),
+    level7 = require("levels.level7"),
+    level8 = require("levels.level8")
 }
 
 local gamestate = require("gamestate")
@@ -35,6 +39,7 @@ function level.set(name)
     if not level.loaded[name] then print("level does not exist") return end
     gamestate.currentSection = 1
     level.current = level.loaded[name]
+    if level.current.onSet then level.current.onSet() end
     gamestate.currentLevel = level.current
     level.timer = 0
 

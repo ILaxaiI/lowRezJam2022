@@ -28,9 +28,9 @@ function  bullet:update(dt)
     end
 
     for i,ent in ipairs(gamestate.entities.entities) do
-        if ent.type == "asteroid" and not ent.isDead and
+        if (ent.type == "asteroid" or ent.type == "ship") and not ent.isDead and
             ent.overlap(self,ent) then
-            ent:takeDamage(self.damage,self)
+            ent:takeDamage(gamestate.stats.cannon_damage,self)
             self:die()
             break
         end

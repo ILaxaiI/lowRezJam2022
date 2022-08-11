@@ -45,7 +45,7 @@ function  gunbase:select()
     if self.weapon then
         self.weapon.isSelected = true
         return self.weapon
-    end    
+    end
 end
 
 function  gunbase:draw()

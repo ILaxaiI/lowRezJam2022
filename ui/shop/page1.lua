@@ -8,41 +8,53 @@ local text = require("ui.elements.text")
 local auguments = require("player.upgrades")
 local gamestate = require("gamestate")
 
+local page = {}
+local function setP()
+    gamestate.shop.currentPage = 2
+end
+local buttons = {
+    
+    button:new(
+    require("graphics.sprites").button_atlas,
+    {love.graphics.newQuad(22,11,10,10,64,64),love.graphics.newQuad(33,11,10,10,64,64)},
+    2,2,10,10,gamestate.shop.back,gamestate.shop),
 
-local displays = {
-    purchase_cannon = mtext:new(tostring(auguments.purchase_cannon:price()),62,17),
-    purchase_energy_shield = mtext:new(tostring(auguments.purchase_cannon:price()),62,28),
- --   gun_damage = mtext.new(auguments.gun_damage:price(),56,27)
+    button:new(ba,{q(0,22,10,10,baw,bah),q(11,22,10,10,baw,bah)},51,14,10,10,gamestate.shop.setPage,gamestate.shop,2),
+    button:new(ba,{q(0,22,10,10,baw,bah),q(11,22,10,10,baw,bah)},51,25,10,10,gamestate.shop.setPage,gamestate.shop,3),
+    button:new(ba,{q(0,22,10,10,baw,bah),q(11,22,10,10,baw,bah)},51,36,10,10,gamestate.shop.setPage,gamestate.shop,4),
+    button:new(ba,{q(0,22,10,10,baw,bah),q(11,22,10,10,baw,bah)},51,50,10,10,gamestate.shop.setPage,gamestate.shop,5),
+}
+local text = {
+    text:new("Cannon",4,15),
+    text:new("Shield",4,26),
+    text:new("Anti-Matter\nCannon",4,37),
+    text:new("Habitat",4,52)
 }
 
+function page:update(dt)
+    
+end
 
-local page
-
-local function purchase(upgrade_name)
-    if auguments.purchase(upgrade_name) then
-        page[displays[upgrade_name].id] = page[#page]
-        page[#page].id = displays[upgrade_name].id
-        page[#page] = nil
+function  page:draw(dt)
+    for i,v in ipairs(buttons) do
+        v:draw()
+    end
+    for i,v in ipairs(text) do
+        v:draw()
     end
 end
 
+function  page:clicked(x,y,b)
+    for i,v in ipairs(buttons) do
+        v:clicked(x,y,b)
+    end
+end
 
-
-page = {
-    button:new(ba,{q(0,11,10,10,baw,bah),q(11,11,10,10,baw,bah)},30,15,10,10,purchase,"purchase_cannon"),
-    button:new(ba,{q(0,11,10,10,baw,bah),q(11,11,10,10,baw,bah)},30,27,10,10,purchase,"purchase_energy_shield"),
-    button:new(ba,{q(0,11,10,10,baw,bah),q(11,11,10,10,baw,bah)},30,39,10,10),
-    button:new(ba,{q(0,11,10,10,baw,bah),q(11,11,10,10,baw,bah)},30,51,10,10),
-    text:new("Cannon",1,18),
-    text:new("Shield",1,30)
-}
-
-
-
-for i,v in pairs(displays) do
-    v.n = tostring(auguments[i]:price())
-    v.id = #page+1
-    page[#page+1] = v
+function  page:released(x,y,b)
+    for i,v in ipairs(buttons) do
+        v:released(x,y,b)
+    end
+    
 end
 
 return page

@@ -67,7 +67,7 @@ function  gun:draw()
 end
 
 local gamestate = require("gamestate")
-local bullet = require("entities.bullet")
+local bullet = require("entities.bullets.bullet")
 
 function gun:shoot()
     local bx,by = self:calcBarrelPos()

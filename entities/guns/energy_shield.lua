@@ -9,25 +9,26 @@ shield.cd = 4
 
 
 
-local shieldEntity = require("entities.shield")
+local shieldEntity = require("entities.bullets.shield")
 local gamestate = require("gamestate")
 
 local viewport = require("ui.viewport")
 
-local activeShield
 shield.sfx = love.audio.newSource("audio/sfx/spaceEngine_002.ogg","static")
 shield.sfx:setVolume(.1)
 shield.sfx:setLooping(true)
 function  shield:mouseDown()
-    if activeShield then
-        activeShield.hybernate = false
-        if activeShield.isDead then 
-            activeShield = nil 
+    if self.activeShield then
+        self.activeShield.hybernate = false
+
+        if self.activeShield.isDead then
+            self.activeShield = nil
             shield.sfx:stop()
         else
             shield.sfx:play()
-        end  
+        end
     end
+    
     if self.cooldown <= 0 then
     local mx,my = love.mouse.getPosition()
     local scale = viewport.getScale()
@@ -36,15 +37,14 @@ function  shield:mouseDown()
     mx = mx/scale - offsetx
     my = my/scale - offsety
 
-    if not activeShield then
-        activeShield = shieldEntity:new(mx,my,self.barrelAngle)
-        activeShield.parent = self
-        gamestate.entities.bullets:insert(activeShield)
-    elseif activeShield then
-        
-        activeShield.x = mx
-        activeShield.y = my
-        activeShield.angle =self.barrelAngle
+    if not self.activeShield then
+        self.activeShield = shieldEntity:new(mx,my,self.barrelAngle)
+        self.activeShield.parent = self
+        gamestate.entities.bullets:insert(self.activeShield)
+    elseif self.activeShield then
+        self.activeShield.x = mx
+        self.activeShield.y = my
+        self.activeShield.angle =self.barrelAngle
 
     end
 end
@@ -52,8 +52,9 @@ end
 
 
 function  shield:mouseReleased()
-    if activeShield and not activeShield.isDead then
-        activeShield.hybernate = true
+    if self.activeShield and not self.activeShield.isDead then
+        self.activeShield.hybernate = true
+        
         shield.sfx:stop()
     end
 end

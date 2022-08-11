@@ -1,13 +1,13 @@
 local button = {}
 button.__index = button
 
-function  button:new(sprite,quads,x,y,w,h,func,args)
+function  button:new(sprite,quads,x,y,w,h,func,a1,a2,a3,a4)
     return setmetatable({
         sprite = sprite,
         quads = quads,
         x = x,y = y,w = w,h = h,
         func = func,
-        args = args,
+        args = {a1,a2,a3,a4},
         hidden = false,
         pressed = false,
     },button)
@@ -22,7 +22,7 @@ end
 
 function button:released(x,y)
     if not self.hidden and self.pressed and self.func and x >= self.x and x <= self.x+self.w and y >= self.y and y <= self.y+self.h then
-        self.func(self.args)
+        self.func(self.args[1],self.args[2],self.args[3],self.args[4])
     end
     self.pressed = false
 end

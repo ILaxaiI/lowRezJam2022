@@ -5,7 +5,7 @@ asteroid.damage = 1
 asteroid.w = 7
 asteroid.h = 6
 asteroid.collidewithplayer = true
-asteroid.money = 10
+asteroid.money = 25
 
 function asteroid:new(speed)
     local x,y = asteroid:getRandomSpawn()
@@ -27,12 +27,7 @@ function  asteroid:update(dt)
     if self.y > 64 then self.isDead = true end
 end
 
-asteroid.sfx = {
-    love.audio.newSource("audio/sfx/explosion.wav","static"),
-    love.audio.newSource("audio/sfx/8bit_bomb_explosion.wav","static"),
-}
-asteroid.sfx[1]:setVolume(.3)
-asteroid.sfx[2]:setVolume(.3)
+
 local explosion = require("graphics.animations.explosion")
 local animation = require("util.animation")
 local gamestate = require("gamestate")
@@ -40,11 +35,8 @@ function  asteroid:die(payout)
     if payout then
         gamestate.player.money = gamestate.player.money + asteroid.money
     end
-    local sfx = love.math.random(1,2)
     animation.startDetached(explosion:create(),self.x,self.y)
-    asteroid.sfx[sfx]:stop()
-    asteroid.sfx[sfx]:setPitch((love.math.random()-.2) + .8)
-    asteroid.sfx[sfx]:play()
+    
     self.isDead = true
 end
 

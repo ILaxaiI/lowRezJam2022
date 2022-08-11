@@ -4,7 +4,7 @@ local vec2 = require("util.vec2")
 
 
 local viewport = require("ui.viewport")
-cannon2.head = require("graphics/sprites").cannon_head_2
+cannon2.head = require("graphics.sprites").cannon_head_2
 
 function  cannon2:calcBarrelPos()
     if self.parent then
@@ -25,7 +25,7 @@ function  cannon2:draw()
 end
 
 local gamestate = require("gamestate")
-local bullet = require("entities.bullet")
+local bullet = require("entities.bullets.bullet")
 function cannon2:shoot()
 
     local sfx = love.math.random(1,#self.sfx)
