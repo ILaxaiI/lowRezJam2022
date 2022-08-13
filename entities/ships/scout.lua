@@ -19,18 +19,18 @@ scout.thrusterAnim = animation:new(
 )
 scout.thrusterAnim:start()
 scout.thrusterAnim:setLoop(true)
-function scout:new()
+function scout:new(_,_,h)
     local x,y = scout:getRandomSpawn()
     return setmetatable({
         x = x,
         y = y,
-        health = 3,
+        health = 12,
         vx = 0,
         vy = 16,
         firecd = 0,
         spawning = true,
         anim = scout.thrusterAnim:create(),
-        height = love.math.random(3,8),
+        height = h or love.math.random(3,8),
         ai = {},
 
         lifetime = 0

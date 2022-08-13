@@ -67,7 +67,7 @@ gammaray.shootAnim:setCallback("onEnd",function (anim,self,frame)
 end)
 
 
-gammaray.damage =3
+gammaray.damage = 5
 gammaray.spawnRegions = {{5,-5,15,-5},{55,-5,59,-5}}
 function  gammaray:new()
 

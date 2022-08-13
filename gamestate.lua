@@ -46,9 +46,10 @@ end
 function gmst.default()
     
     gamestate.difficulty = 1
+    gamestate.selectedWeapon = 0
     gamestate.player = gamestate.player or {}
     gamestate.player.passive_income = 0
-    gamestate.player.money = 100
+    gamestate.player.money = 1000000
     gamestate.player.health = 20
     gamestate.player.maxHealth = 20
     gamestate.player.base_maxHealth=20
@@ -66,7 +67,7 @@ function gmst.default()
         energy_shield_health = 12,
         energy_shield_recharge = 3,
         antimatter_explosion_size = 1,
-        antimatter_explosion_damage = 5,
+        antimatter_explosion_damage = 7,
         player_speed = 15,
         player_regen = 0,
     }

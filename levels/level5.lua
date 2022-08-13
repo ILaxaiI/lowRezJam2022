@@ -7,11 +7,11 @@ return {
         "loop2","loop2","loop2","loop2",
     },
     
-    minSpawnTime = .8,
-    maxSpawnTime = 2.2,
+    minSpawnTime = .7,
+    maxSpawnTime = 1.5,
 
     randomEnemies = {
-        {"asteroid",.55,24},{"large_asteroid",.1,2},{"radiation",.25,24},{"solar_flare",.1,10}
+        {"asteroid",.55,24},{"large_asteroid",.2,2},{"radiation",.15,24},{"solar_flare",.1,10}
     }
     }}
 }

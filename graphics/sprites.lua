@@ -20,7 +20,8 @@ local sprites = {
     antimatter_cannon = ln("graphics/antimatter_cannon.png"),
     button_atlas = ln("graphics/menus/button_atlas.png"),
     play_button = ln("graphics/menus/play_button.png"),
-    ship_atlas = ln("graphics/alien_small_ships.png")
+    ship_atlas = ln("graphics/alien_small_ships.png"),
+    boss_health = ln("graphics/boss_health.png")
 }
 
 

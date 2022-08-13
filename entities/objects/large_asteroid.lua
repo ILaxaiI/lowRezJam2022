@@ -126,7 +126,7 @@ function  large_asteroid:takeDamage(dmg,ent)
                 if y >= 0 and  y < self.size and self.gridptr[x][y] > 0 and math.sqrt(dx*dx+dy*dy) <= ent.explosionSize then
                     self.gridptr[x][y] = 0
                     destroyed = destroyed + 1
-                    gamestate.player.money = gamestate.player.money + 10
+                    gamestate.player.money = gamestate.player.money + 5
                 end
             end
         end
@@ -144,7 +144,7 @@ function  large_asteroid:takeDamage(dmg,ent)
                 if y >= 0 and  y < self.size and self.gridptr[x][y] ~= 0 then
                     self.gridptr[x][y] = 0
                     self.tileCount = self.tileCount - 1
-                    gamestate.player.money = gamestate.player.money + 10
+                    gamestate.player.money = gamestate.player.money + 5
                 end
             end
         end

@@ -139,10 +139,16 @@ function animation.clearDetached()
     detached={}
 end
 
-function animation:draw(x,y)
+function animation:draw(x,y,r)
     if self.playing then
         local frame = self.frames[self.currentFrame]
-        love.graphics.draw(self.sprite,self.quads[frame.quadId],frame.ox+x+self.ox,frame.oy+y+self.oy,frame.r,frame.sx,frame.sy)
+        love.graphics.draw(self.sprite,self.quads[frame.quadId],x+self.ox+frame.ox,y+self.oy+frame.oy,frame.r + (r or 0),frame.sx,frame.sy)
+    end
+end
+function animation:draw2(x,y,r)
+    if self.playing then
+        local frame = self.frames[self.currentFrame]
+        love.graphics.draw(self.sprite,self.quads[frame.quadId],x+self.ox+frame.ox,y+self.oy+frame.oy,frame.r + (r or 0),frame.sx,frame.sy,frame.orx,frame.ory)
     end
 end
 

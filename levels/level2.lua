@@ -8,8 +8,8 @@ return {
         "transition","loop1","loop1","loop1",
     },
     
-    minSpawnTime = 1,
-    maxSpawnTime = 2.5,
+    minSpawnTime = .9,
+    maxSpawnTime = 1.9,
 
     randomEnemies = {
     {"asteroid",.8,24},{"radiation",.2,10}

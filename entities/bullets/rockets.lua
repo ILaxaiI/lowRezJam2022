@@ -8,7 +8,7 @@ rocket.w = 3
 rocket.h = 5
 rocket.explosionSize = 2
 rocket.collidewithplayer = true
-
+rocket.acceleration = 15
 rocket.sprite = require("graphics.sprites").ship_atlas
 
 local nq = love.graphics.newQuad
@@ -40,7 +40,7 @@ local overlap = require("util.overlap")
 
 function  rocket:update(dt)
     self.animation:update(dt)
-    self.vy = self.vy + 15*dt
+    self.vy = self.vy + self.acceleration*dt
     self.x = self.x + self.vx*dt
     self.y = self.y + self.vy*dt
     if self.x > 100 or self.x < -100 or self.y < -5 or self.y > 100 then

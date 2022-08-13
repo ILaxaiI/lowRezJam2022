@@ -8,7 +8,8 @@ level.loaded = {
     level5 = require("levels.level5"),
     level6 = require("levels.level6"),
     level7 = require("levels.level7"),
-    level8 = require("levels.level8")
+    level8 = require("levels.level8"),
+    boss = require("levels.boss")
 }
 
 local gamestate = require("gamestate")
@@ -33,7 +34,17 @@ level.timer = 0
 level.nextSpawnTime = 0
 local spawnTimer = 1
 
-
+function level.resetSpawned()
+    for i,section in ipairs(level.current.sections) do
+        if section.enemies then
+        for i,v in ipairs(section.enemies) do
+            for i2,v2 in ipairs(v.spawns) do
+                v2.spawned = false
+            end
+        end
+    end
+end
+end
 
 function level.set(name)
     if not level.loaded[name] then print("level does not exist") return end
@@ -42,9 +53,11 @@ function level.set(name)
     if level.current.onSet then level.current.onSet() end
     gamestate.currentLevel = level.current
     level.timer = 0
-
+    level.resetSpawned()
 end
-local compare = {
+
+
+            local compare = {
     AND = function (a,b)
         return a and b
     end,
@@ -67,6 +80,11 @@ local prog = {
     end,
     duration = function (data)
         return level.timer >= data
+    end,
+    beaten = function (data,allSpawned)
+        if data == "all" then
+            return allSpawned
+        end
     end
 }
 
@@ -76,15 +94,18 @@ local loop = {
     end
 }
 
-function level.progress(section)
 
+local progressTimer = 0
+local p = false
+function level.progress(section,...)
     for i,v in pairs(section.advance) do
-        if prog[i] and prog[i](v) then
+        if prog[i] and prog[i](v,...) then
             if level.current.sections[gamestate.currentSection+1] then
                 gamestate.currentSection = gamestate.currentSection + 1
                 level.timer = 0
             else
-                level.set(level.current.next)
+                progressTimer = 5
+                p = true
             end
         end
     end
@@ -95,6 +116,7 @@ function level.progress(section)
     for i,v in pairs(section.loop) do
         if loop[i] and loop[i](v) then
             level.timer = 0
+            level.resetSpawned()
         end
     end
 end
@@ -102,31 +124,36 @@ end
 function  level.update(dt)
     local section = level.current.sections[gamestate.currentSection]
   
-    if section.randomEnemies then
-        level.spawnRandomEntities(section,dt)
-    end
-    if section.enemies then
-    for i,v in ipairs(section.enemies) do
-        for i2,v2 in ipairs(v.spawns) do
-            if level.timer <= v2.t and level.timer+dt >= v2.t then
-                local enemy = enemies[v.name]:new(v2.sv)
-                
-                enemy.x = v2.x
-                enemy.y = v2.y
-
-                gamestate.entities.entities:insert(enemy)
+    if not p then
+        if section.randomEnemies then
+            level.spawnRandomEntities(section,dt)
+        end
+        local allSpawned = true
+        if section.enemies then
+            for i,v in ipairs(section.enemies) do
+                for i2,v2 in ipairs(v.spawns) do
+                    if not v2.spawned or (v2.spawned and not v2.spawned.isDead) then allSpawned = false end
+                    if level.timer+dt >= v2.t and not v2.spawned then
+                        local enemy = enemies[v.name]:new(v2.sv)
+                        enemy.x = v2.x
+                        enemy.y = v2.y
+                        gamestate.entities.entities:insert(enemy)
+                        v2.spawned = enemy
+                    end
+                end
             end
         end
+        
+        level.timer = level.timer +dt
+        level.progress(section,allSpawned)
+
+    else
+        progressTimer = progressTimer - dt
+        if progressTimer <= 0 then
+            p = false
+            level.set(level.current.next)
+        end
     end
-end
-
-    level.timer = level.timer +dt
-    level.progress(section)
-
---    if level.timer > level.current.duration+1 then
---        level.set(level.current.next)
---        soundQueue:play()
---    end
 end
 
 function level.draw()

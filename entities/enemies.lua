@@ -7,7 +7,7 @@ local enemies = {
     large_asteroid = require("entities.objects.large_asteroid"),
     scout_ship = require("entities.ships.scout"),
     bomber = require("entities.ships.bomber"),
-
+    large_ship = require("entities.ships.large_ship"),
     tutorial_asteroid = require("entities.objects.tutorial_asteroid")
 }
 return enemies

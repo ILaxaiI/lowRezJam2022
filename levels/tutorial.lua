@@ -1,5 +1,5 @@
 local tut = {
-    name = "tutorial",next = "level1",
+    name = "tutorial",next = "boss",
     sections = {
        {
         advance = {progress = {"tutorial_asteroid_dodged",op = "OR"}},
@@ -16,7 +16,7 @@ local tut = {
     },
     
     {
-        advance = {progress = {"cannon_purchased","tutorial_asteroid_destroyed",op = "AND"}},
+        advance = {progress = {"cannon_purchased",op = "AND"}},
         --loop = {duration = 10},
         songQueue = {},
         minSpawnTime = 2,
@@ -28,7 +28,7 @@ local tut = {
 
     
     {
-        advance = {duration = 10},--progress = {"cannon_purchased","tutorial_asteroid_destroyed",op = "AND"}},
+        advance = {progress = {"tutorial_asteroid_destroyed",op = "AND"}},--progress = {"cannon_purchased","tutorial_asteroid_destroyed",op = "AND"}},
         --loop = {duration = 10},
         songQueue = {},
         --[[enemies = {

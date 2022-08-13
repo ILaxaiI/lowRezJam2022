@@ -40,8 +40,8 @@ function  habitat:update(dt)
             gamestate.player.money = gamestate.player.money + gamestate.player.passive_income
             self.payoutTimer = self.payoutTimer - 5
         end
-
-        gamestate.player.health = gamestate.player.health + dt*gamestate.stats.player_regen
+        
+        gamestate.player.health = math.min(gamestate.player.maxHealth,gamestate.player.health + dt*gamestate.stats.player_regen)
 
         for i,ent in ipairs(gamestate.entities.entities) do
             if (ent.collidewithplayer) and not ent.isDead and
@@ -62,9 +62,11 @@ end
 local healthbar = require("ui.healthbar")
 
 function  habitat:draw()
+
     local y = self.y+.5*(math.sin(self.animT)+1)
     love.graphics.draw(self.sprite,self.x,y)
     healthbar:draw(self.x+3,y+6)
+
 end
 
 return habitat

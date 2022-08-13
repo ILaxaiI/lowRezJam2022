@@ -1,10 +1,11 @@
 local green_laser = require("entities.entity"):extend()
 green_laser.__index = green_laser
-green_laser.speed =50
+green_laser.speed = 50
 green_laser.type = "bullet_laser"
 green_laser.damage = 1
 green_laser.health = .1
-green_laser.w = 3
+green_laser.aabbxo = 1
+green_laser.w = 1
 green_laser.h = 5
 green_laser.explosionSize = 2
 green_laser.collidewithplayer = true
@@ -29,6 +30,7 @@ function green_laser:new(x,y,angle)
     local gl = {
         x = x,
         y = y,
+        angle = angle,
         vx = green_laser.speed*math.cos(angle),
         vy = green_laser.speed*math.sin(angle),
         animation = green_laser.anim:create()
@@ -52,9 +54,7 @@ function  green_laser:update(dt)
 end
 
 function  green_laser:draw()
-    self.animation:draw(self.x,self.y)
-
-
+    self.animation:draw(self.x,self.y,self.angle-math.pi/2)
 end
 
 
@@ -62,6 +62,7 @@ local explosion = require("graphics.animations.smallexplosion")
 local animation = require("util.animation")
 
 function green_laser:die()
+
     animation.startDetached(explosion:create(),self.x,self.y+1)
     self.isDead = true
 end

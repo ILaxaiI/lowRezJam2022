@@ -29,7 +29,7 @@ local buttons = {
         8,12,48,16,
         function ()
             local guns = gamestate.guns
-            local lvl = gamestate.currentLevel
+            local lvl = gamestate.currentLevel.name
             if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then
                 print("-")
                 gamestate.entities.bullets:remove(gamestate.guns[1].weapon.activeShield)

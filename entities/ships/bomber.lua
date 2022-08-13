@@ -19,18 +19,18 @@ bomber.thrusterAnim = animation:new(
 )
 bomber.thrusterAnim:start()
 bomber.thrusterAnim:setLoop(true)
-function bomber:new()
+function bomber:new(_,_,h)
     local x,y = bomber:getRandomSpawn()
     return setmetatable({
         x = x,
         y = y,
-        health = 3,
+        health = 24,
         vx = 0,
         vy = 16,
         firecd = 1,
         spawning = true,
         anim = bomber.thrusterAnim:create(),
-        height = love.math.random(3,8),
+        height = h or love.math.random(3,8),
         ai = {},
 
         lifetime = 0

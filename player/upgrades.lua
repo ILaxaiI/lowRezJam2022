@@ -70,15 +70,15 @@ local upgrades = {
 
     player_health = {
         maxLevel = 10,
-        price = function () return 250 + ((gamestate.upgrades["antimatter_explosion_damage"] and gamestate.upgrades["player_health"].level or 0)+1) * 100 end
+        price = function () return 250 + ((gamestate.upgrades["player_health"] and gamestate.upgrades["player_health"].level or 0)+1) * 100 end
     },
     player_repair_drones = {
         maxLevel = 5,
-        price = function () return 1000 + ((gamestate.upgrades["antimatter_explosion_damage"] and gamestate.upgrades["player_repair_drones"].level or 0)+1) * 1000 end
+        price = function () return 1000 + ((gamestate.upgrades["player_repair_drones"] and gamestate.upgrades["player_repair_drones"].level or 0)+1) * 1000 end
     },
     player_speed = {
         maxLevel = 10,
-        price = function () return 50 + ((gamestate.upgrades["antimatter_explosion_damage"] and gamestate.upgrades["player_speed"].level or 0)+1) * 70 end
+        price = function () return 50 + ((gamestate.upgrades["player_speed"] and gamestate.upgrades["player_speed"].level or 0)+1) * 70 end
     }
 
 }
@@ -87,8 +87,17 @@ local gb = require("entities.guns.gunbase")
 function upgrades.purchase_cannon.apply(level)
     if not gamestate.progressFlags.cannon_purchased then
     gamestate.progressFlags.cannon_purchased = true
-
+    
     gamestate.guns[0] = gb:new(gunSpawns[1])
+    
+    
+    for i = 0,3 do
+        local v = gamestate.guns[i]
+        if v and v.weapon then
+            v.weapon.isSelected = false
+        end
+    end
+    
     gamestate.guns[0]:attach(require("entities.guns.cannon"):new())
     if gamestate.guns[0]:select() then gamestate.selectedWeapon = 0 end
     end
@@ -98,6 +107,15 @@ function upgrades.upgrade_cannon.apply()
     if not (gamestate.guns[0] and gamestate.guns[0].weapon) then
          gamestate.guns[0] = gb:new(gunSpawns[1])
     end
+
+        
+    for i = 0,3 do
+        local v = gamestate.guns[i]
+        if v and v.weapon then
+            v.weapon.isSelected = false
+        end
+    end
+
     gamestate.guns[0]:attach(require("entities.guns.cannon2shot"):new())
     gamestate.guns[0].spawning = true
     gamestate.guns[0].spawnT = 0
@@ -108,6 +126,18 @@ end
 function upgrades.purchase_energy_shield.apply()
     if not gamestate.progressFlags.purchase_energy_shield then
     gamestate.progressFlags.purchase_energy_shield = true
+
+
+        
+    for i = 0,3 do
+        local v = gamestate.guns[i]
+        if v and v.weapon then
+            v.weapon.isSelected = false
+        end
+    end
+
+
+
     gamestate.guns[1]= gb:new(gunSpawns[2])
     gamestate.guns[1]:attach(require("entities.guns.energy_shield"):new())
     if gamestate.guns[1]:select() then gamestate.selectedWeapon = 1 end
@@ -117,6 +147,17 @@ end
 function upgrades.purchase_antimatter_cannon.apply()
     if not gamestate.progressFlags.purchase_antimatter_cannon then
     gamestate.progressFlags.purchase_antimatter_cannon = true
+
+        
+    for i = 0,3 do
+        local v = gamestate.guns[i]
+        if v and v.weapon then
+            v.weapon.isSelected = false
+        end
+    end
+
+
+
     gamestate.guns[2]= gb:new(gunSpawns[3])
     gamestate.guns[2]:attach(require("entities.guns.antimatter_cannon"):new())
     if gamestate.guns[2]:select() then gamestate.selectedWeapon = 2 end
@@ -147,17 +188,18 @@ end
 function  upgrades.cannon_damage.apply(level)
     local b = gamestate.base_stats.cannon_damage
     gamestate.stats.cannon_damage = b+.5*level
+    
 end
 
 
 
 function  upgrades.antimatter_explosion_size.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_size
-    gamestate.stats.antimatter_explosion_size = b+.1*level
+    gamestate.stats.antimatter_explosion_size = b+.12*level
 end
 function  upgrades.antimatter_explosion_damage.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_damage
-    gamestate.stats.antimatter_explosion_damage = b+1*level
+    gamestate.stats.antimatter_explosion_damage = b+7*level
 end
 
 

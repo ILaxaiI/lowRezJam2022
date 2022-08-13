@@ -9,7 +9,7 @@ return {
     
     
     minSpawnTime = .8,
-    maxSpawnTime = 2.2,
+    maxSpawnTime = 1.6,
 
     randomEnemies = {
         {"asteroid",.65,24},{"radiation",.25,24},{"solar_flare",.1,10}

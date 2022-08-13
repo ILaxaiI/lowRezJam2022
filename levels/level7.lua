@@ -8,7 +8,7 @@ return {
     },
     
     
-    minSpawnTime = .7,
+    minSpawnTime = .6,
     maxSpawnTime = 1.5,
 
     randomEnemies = {

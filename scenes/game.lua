@@ -113,6 +113,7 @@ local bhrender = false
 local tutorial = {
     movement_prompt = text:new("[A/Left arrow]\n[d/Right arrow]\nto move",2,20),
     shop_prompt = text:new("[B] to open shop ",2,20),
+    shoot_prompt = text:new("Mouse to aim\nClick to shoot\n[1-3]/Mouse wheel\nto swap",2,20),
 
 }
 
@@ -152,6 +153,8 @@ function  game.draw()
             tutorial.movement_prompt:draw()
         elseif gamestate.currentSection == 2 then
             tutorial.shop_prompt:draw()
+        elseif gamestate.currentSection == 3 and not gamestate.progressFlags.tutorial_asteroid_destroyed then
+            tutorial.shoot_prompt:draw()
         end
 
     end
