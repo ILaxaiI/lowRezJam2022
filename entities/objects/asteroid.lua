@@ -22,8 +22,6 @@ end
 function  asteroid:update(dt)
     self.y = self.y + dt*self.vy
     self.x = self.x + dt*self.vx
-
-
     if self.y > 64 then self.isDead = true end
 end
 

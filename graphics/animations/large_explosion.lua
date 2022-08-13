@@ -15,12 +15,9 @@ local explosion = animation:new(esp,
 
 
 
-explosion.sfx = {
-    love.audio.newSource("audio/sfx/explosion.wav","static"),
-    love.audio.newSource("audio/sfx/8bit_bomb_explosion.wav","static"),
-}
-explosion.sfx[1]:setVolume(.3)
-explosion.sfx[2]:setVolume(.3)
+
+local sfx = require("audio.sfx.sfx")
+local s = {"explosion1","explosion2"}
 
 function  explosion:start()
     self.timer = 0
@@ -28,10 +25,7 @@ function  explosion:start()
     self:call("onStart")
     self:call("onFrame",1)
     self.playing = true
-    local sfx = love.math.random(1,2)
-    explosion.sfx[sfx]:stop()
-    explosion.sfx[sfx]:setPitch((love.math.random()-.2) + .8)
-    explosion.sfx[sfx]:play()
+    sfx.play(s[love.math.random(1,2)],(love.math.random()-.2) + .8)
 end
 
 

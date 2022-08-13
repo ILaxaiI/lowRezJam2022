@@ -23,14 +23,14 @@ function  cannon2:draw()
     love.graphics.draw(self.barrel,self.barrelOffsetX+1,self.barrelOffsetY,self.barrelAngle,1,1,self.barrelWidth/2,self.barrelHeight-.5)
     
 end
+local sfx = require("audio.sfx.sfx")
 
 local gamestate = require("gamestate")
 local bullet = require("entities.bullets.bullet")
 function cannon2:shoot()
 
-    local sfx = love.math.random(1,#self.sfx)
-    self.sfx[sfx]:stop()
-    self.sfx[sfx]:play()
+    local sfxn = love.math.random(1,#self.sfx)
+    sfx.play(self.sfx[sfxn])
 
     local bx1,by1,bx2,by2 = self:calcBarrelPos()
     gamestate.entities.bullets:insert(bullet:new(bx1,by1,self.barrelAngle-math.pi/2))

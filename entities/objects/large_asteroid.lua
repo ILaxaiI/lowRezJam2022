@@ -76,12 +76,6 @@ function  large_asteroid:update(dt)
     if self.y > 64 then self.isDead = true end
 end
 
-large_asteroid.sfx = {
-    love.audio.newSource("audio/sfx/explosion.wav","static"),
-    love.audio.newSource("audio/sfx/8bit_bomb_explosion.wav","static"),
-}
-large_asteroid.sfx[1]:setVolume(.1)
-large_asteroid.sfx[2]:setVolume(.1)
 local explosion = require("graphics.animations.explosion")
 local animation = require("util.animation")
 
@@ -108,6 +102,8 @@ function large_asteroid.overlap(e1,e2)
     end
 end
 
+local sfx = require("audio.sfx.sfx")
+local s = {"explosion1","explosion2"}
 
 
 function  large_asteroid:takeDamage(dmg,ent)
@@ -154,10 +150,7 @@ function  large_asteroid:takeDamage(dmg,ent)
 
 
 
-    local sfx = love.math.random(1,2)
-    large_asteroid.sfx[sfx]:stop()
-    large_asteroid.sfx[sfx]:setPitch((love.math.random()-.2) + .8)
-    large_asteroid.sfx[sfx]:play()
+    sfx.play(s[love.math.random(1,2)],.8+.35*love.math.random(),.1)
     
 end
 local gamestate = require("gamestate")
@@ -184,14 +177,11 @@ function  large_asteroid:draw()
         end
     end love.graphics.setColor(1,1,1)
 end
-
-
 function  large_asteroid:die()
-    local sfx = love.math.random(1,2)
-    large_asteroid.sfx[sfx]:stop()
-    large_asteroid.sfx[sfx]:setPitch((love.math.random()-.2) + .8)
-    large_asteroid.sfx[sfx]:play()
-
+    
+    
+    
+    sfx.play(s[love.math.random(1,2)],.8+.35*love.math.random())
     self.grid:release()
     self.gridptr = nil
     self.isDead = true

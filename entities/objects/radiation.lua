@@ -14,7 +14,7 @@ function radiation:new(speed)
         y = y,
         vx = 0,
         vy = speed,
-        health = 5,
+        health = 3,
     },self)
 end
 

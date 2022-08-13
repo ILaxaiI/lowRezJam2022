@@ -1,12 +1,11 @@
 return {
     next = "level3",
     name = "level2",
+    music ={{"transition",loop = false},{"loop1",loop = true}},
     sections = {
         {
         advance = {duration = 45},
-    songQueue = {
-        "transition","loop1","loop1","loop1",
-    },
+  
     
     minSpawnTime = .9,
     maxSpawnTime = 1.9,

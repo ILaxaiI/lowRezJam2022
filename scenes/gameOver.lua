@@ -31,7 +31,7 @@ local buttons = {
             local guns = gamestate.guns
             local lvl = gamestate.currentLevel.name
             if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then
-                print("-")
+              
                 gamestate.entities.bullets:remove(gamestate.guns[1].weapon.activeShield)
                 gamestate.guns[1].weapon.activeShield = nil
                 gamestate.guns[1].weapon.cooldown=0

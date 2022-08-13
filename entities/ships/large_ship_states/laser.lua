@@ -14,14 +14,13 @@ local barrels = {[0] = {x=2,r =math.rad(90 - 15)},{x=38,r =math.rad(90+ 15)}}
 local sfx = { laser = love.audio.newSource("audio/sfx/laserLarge_003.ogg","static"),}
 
 
+local sfx = require("audio.sfx.sfx")
 function  laser.update(ai,entity,dt)
     ai.timer = ai.timer + dt
     ai.bulletTimer = ai.bulletTimer + dt
     if ai.bulletTimer >= 1/entity.laserFirerate then
         ai.barrel = (ai.barrel + 1)%2
-        sfx.laser:stop()
-        sfx.laser:setPitch(love.math.random()*.4 + .6)
-        sfx.laser:play()
+        sfx.play("largeLaser3")
         gamestate.entities.entities:insert(laser_bolt:new(entity.x + barrels[ai.barrel].x,13,barrels[ai.barrel].r))
         ai.bulletTimer = 0
     end

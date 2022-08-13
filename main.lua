@@ -10,17 +10,21 @@ function math.lerpc (a, b, t)
     return math.max(a,math.min(b,math.lerp(a,b,t)))
 end
 
+
+
 local viewport = require("ui.viewport")
 viewport.scale = viewport.getScale()
 viewport.offsetx,viewport.offsety = viewport.getOffset()
 
-
+local settings = require("settings")
+settings:load()
 
 local state = require("util.state")
 state.load("scenes.game","game")
 state.load("scenes.mainmenu","mainmenu")
 state.load("scenes.shop","shop")
 state.load("scenes.gameOver","gameOver")
+state.load("scenes.options","options")
 
 
 

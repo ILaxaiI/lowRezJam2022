@@ -40,10 +40,7 @@ end
 local gamestate = require("gamestate")
 local bullet = require("entities.bullets.green_laser")
 
-local sfx = {
-    love.audio.newSource("audio/sfx/laserLarge_003.ogg","static"),
-}
-
+local sfx = require("audio.sfx.sfx")
 
 function  scout:update(dt)
     self.anim:update(dt)
@@ -80,9 +77,7 @@ function  scout:update(dt)
     self.firecd = self.firecd + dt
     if self.firecd > 1/self.firerate then
         gamestate.entities.entities:insert(bullet:new(self.x+5,self.y+4,math.pi/2))
-        sfx[1]:stop()
-        sfx[1]:setPitch(.3*love.math.random()+.85)
-        sfx[1]:play()
+        sfx.play("largeLaser3")
         self.firecd = 0
     end
 

@@ -32,7 +32,7 @@ end
 
 function entity:takeDamage(dmg)
     self.health = self.health - dmg
-    if self.health <= 0 then   self:die() end
+    if self.health <= 0 then  self:die(true) end
 end
 
 local overlap = require("util.overlap")

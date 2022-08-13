@@ -13,19 +13,16 @@ local shieldEntity = require("entities.bullets.shield")
 local gamestate = require("gamestate")
 
 local viewport = require("ui.viewport")
-
-shield.sfx = love.audio.newSource("audio/sfx/spaceEngine_002.ogg","static")
-shield.sfx:setVolume(.1)
-shield.sfx:setLooping(true)
+local sfx = require("audio.sfx.sfx").shieldEffect
 function  shield:mouseDown()
     if self.activeShield then
         self.activeShield.hybernate = false
 
         if self.activeShield.isDead then
             self.activeShield = nil
-            shield.sfx:stop()
+            sfx:stop()
         else
-            shield.sfx:play()
+            sfx:play()
         end
     end
     
@@ -54,8 +51,7 @@ end
 function  shield:mouseReleased()
     if self.activeShield and not self.activeShield.isDead then
         self.activeShield.hybernate = true
-        
-        shield.sfx:stop()
+        sfx:stop()
     end
 end
 

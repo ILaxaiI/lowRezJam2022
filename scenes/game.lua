@@ -183,6 +183,7 @@ function  game.keypressed(key)
     if key == "2" then game.selectGun(1) end
     if key == "3" then game.selectGun(2) end
     if key == "4" then game.selectGun(3) end
+    if key == "escape" then scene.set("options","game") end
 end
 
 return game

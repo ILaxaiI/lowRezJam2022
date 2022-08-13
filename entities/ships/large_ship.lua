@@ -1,6 +1,4 @@
 local gamestate = require("gamestate")
-
-
 local large_ship = require("entities.entity"):extend()
 large_ship.sprite = require("graphics.sprites").ship_atlas
 large_ship.quads = {
@@ -74,12 +72,10 @@ end
 
 function  statesMt.Forcetransition(ai,name,entity)
     if ai.interupt then ai.interupt(ai,entity) end
-    print(name,states[name])
     if states[name] then
         if states[name].init then
             states[name].init(ai,entity)
         end
-        print(name)
         setmetatable(ai,states[name])
     end
 end
@@ -120,9 +116,6 @@ end
 
 local bullet = require("entities.bullets.green_laser")
 
-local sfx = {
-    love.audio.newSource("audio/sfx/laserLarge_003.ogg","static"),
-}
 
 
 function  large_ship:update(dt)

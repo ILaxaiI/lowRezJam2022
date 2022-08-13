@@ -7,6 +7,9 @@ local habitat
 local button = require("ui.elements.button")
 local gamestate = require("gamestate")
 
+local sb = require("graphics.sprites").button_atlas
+local iw2,ih2 = sb:getWidth(),sb:getHeight()
+
 function mainmenu.init()
     habitat = require("entities.habitat"):new()
 end
@@ -18,6 +21,20 @@ local buttons = {
     8,16,48,16,
     function ()
         state.set("game",habitat);
+    end),
+    button:new(
+    sb,
+    {love.graphics.newQuad(22,22,10,10,iw2,ih2),love.graphics.newQuad(33,22,10,10,iw2,ih2)},
+    8,33,10,10,
+    function ()
+        state.set("options","mainmenu");
+    end),
+    button:new(
+    sb,
+    {love.graphics.newQuad(22,11,10,10,iw2,ih2),love.graphics.newQuad(33,11,10,10,iw2,ih2)},
+    46,33,10,10,
+    function ()
+        love.event.quit()
     end)
 }
 
