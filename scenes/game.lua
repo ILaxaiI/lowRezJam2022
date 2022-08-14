@@ -14,14 +14,12 @@ function  game.reset()
     gamestate.default()
     gamestate.player.entity = habitat:new()
 end
-local music = require("audio.music")
-local musicVolume = 0
-local musicPrevol
 
 function game.init(_,reset)
-    musicVolume = 0
-    musicPrevol = music.source:getVolume()
+
+    
     if reset or not gamestate.player.entity then
+        level.set(level.loaded[gamestate.currentLevel].name)
         game.reset()
     end
 end
@@ -51,10 +49,7 @@ end
 local ndisp = require("player.money_display")
 function  game.update(dt)
        
-    musicVolume = musicVolume+dt
-    local vol = math.lerpc(musicPrevol,music.volume,musicVolume)
-
-    music.source:setVolume(vol)
+ 
     ndisp:update(dt)
     level.update(dt)
     animation.updateDetached(dt)

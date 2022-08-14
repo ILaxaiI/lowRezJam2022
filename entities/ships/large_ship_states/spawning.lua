@@ -1,6 +1,6 @@
 local spawning = {timer = 0}
 spawning.__index = spawning
-local spawn_speed = 3
+local spawn_speed = 9
 
 function  spawning.update(ai,entity,dt)
     ai.timer = ai.timer + dt

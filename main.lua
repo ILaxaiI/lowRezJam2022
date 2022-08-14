@@ -1,5 +1,7 @@
 love.graphics.setDefaultFilter("nearest","nearest")
 
+local settings = require("settings")
+settings:load()
 
 require("ui.elements.text")
 
@@ -16,8 +18,7 @@ local viewport = require("ui.viewport")
 viewport.scale = viewport.getScale()
 viewport.offsetx,viewport.offsety = viewport.getOffset()
 
-local settings = require("settings")
-settings:load()
+
 
 local state = require("util.state")
 state.load("scenes.game","game")

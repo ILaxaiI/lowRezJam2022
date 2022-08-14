@@ -1,6 +1,6 @@
 local level = {}
 level.loaded = {
-    [0] = require("levels.tutorial"),
+    tutorial = require("levels.tutorial"),
     level1 = require("levels.level1"),
     level2 = require("levels.level2"),
     level3 = require("levels.level3"),
@@ -13,14 +13,10 @@ level.loaded = {
 }
 
 local gamestate = require("gamestate")
-level.current = level.loaded[gamestate.currentLevel]
 
 
-local music = require("audio.music")
+
 local enemies = require("entities.enemies")
-local soundQueue = music.source
-
-
 
 local function  getRandomWeigthedElement(ents)
     local val = love.math.random()
@@ -34,6 +30,8 @@ level.timer = 0
 level.nextSpawnTime = 0
 local spawnTimer = 1
 
+local music = require("audio.music")
+
 function level.resetSpawned()
     for i,section in ipairs(level.current.sections) do
         if section.enemies then
@@ -45,26 +43,31 @@ function level.resetSpawned()
     end
 end
 end
+level.currentMusic = false
+level.musicIndex = 1
+local settings = require("settings")
+
 
 function level.set(name)
     if not level.loaded[name] then print("level does not exist") return end
+
+    level.songIndex = 0
     gamestate.currentSection = 1
     level.current = level.loaded[name]
-    if level.current.onSet then level.current.onSet() end
     gamestate.currentLevel = level.current
+
     level.timer = 0
     level.resetSpawned()
 end
 
 
-            local compare = {
+local compare = {
     AND = function (a,b)
         return a and b
     end,
     OR = function (a,b)
         return a or b
-    end
-}
+    end}
 
 local prog = {
     progress = function (data)
@@ -85,14 +88,12 @@ local prog = {
         if data == "all" then
             return allSpawned
         end
-    end
-}
+    end}
 
 local loop = {
     duration = function (data)
         return level.timer >= data
-    end
-}
+    end}
 
 
 local progressTimer = 0
@@ -110,8 +111,6 @@ function level.progress(section,...)
         end
     end
 
-
-
     if not section.loop then return end
     for i,v in pairs(section.loop) do
         if loop[i] and loop[i](v) then
@@ -121,45 +120,73 @@ function level.progress(section,...)
     end
 end
 
+function level.updateMusic()
+    if not level.currentMusic then
+        level.currentMusic = level.getNextSong()
+        if music[level.currentMusic] then
+            music[level.currentMusic]:setVolume(settings.musicVolume)
+            music[level.currentMusic]:play()
+        end
+    end
+    if music[level.currentMusic] and not music[level.currentMusic]:isPlaying() then
+        level.currentMusic = level.getNextSong()
+            music[level.currentMusic]:setVolume(settings.musicVolume)
+            music[level.currentMusic]:play()
+    end
+    
+end
+
 function  level.update(dt)
     local section = level.current.sections[gamestate.currentSection]
-  
+
     if not p then
+        level.updateMusic()
+
         if section.randomEnemies then
             level.spawnRandomEntities(section,dt)
         end
-        local allSpawned = true
-        if section.enemies then
-            for i,v in ipairs(section.enemies) do
-                for i2,v2 in ipairs(v.spawns) do
-                    if not v2.spawned or (v2.spawned and not v2.spawned.isDead) then allSpawned = false end
-                    if level.timer+dt >= v2.t and not v2.spawned then
-                        local enemy = enemies[v.name]:new(v2.sv)
-                        enemy.x = v2.x
-                        enemy.y = v2.y
-                        gamestate.entities.entities:insert(enemy)
-                        v2.spawned = enemy
-                    end
-                end
-            end
-        end
-        
+        local allSpawned = level.spawnScriptedEntities(section,dt)
         level.timer = level.timer +dt
         level.progress(section,allSpawned)
-
     else
         progressTimer = progressTimer - dt
+        if level.current.next == "boss" then
+            music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(0,1,progressTimer/5)))
+        end
         if progressTimer <= 0 then
+            music[level.currentMusic]:stop()
             p = false
             level.set(level.current.next)
         end
     end
 end
 
+
+
 function level.draw()
     if level.current.draw then
         level.current:draw()
     end
+end
+
+
+function level.spawnScriptedEntities(section,dt)
+    local allSpawned = true
+    if section.enemies then
+        for i,v in ipairs(section.enemies) do
+            for i2,v2 in ipairs(v.spawns) do
+                if not v2.spawned or (v2.spawned and not v2.spawned.isDead) then allSpawned = false end
+                if level.timer+dt >= v2.t and not v2.spawned then
+                    local enemy = enemies[v.name]:new(v2.sv)
+                    enemy.x = v2.x
+                    enemy.y = v2.y
+                    gamestate.entities.entities:insert(enemy)
+                    v2.spawned = enemy
+                end
+            end
+        end
+    end
+    return allSpawned
 end
 
 function  level.spawnRandomEntities(section,dt)
@@ -175,5 +202,15 @@ function  level.spawnRandomEntities(section,dt)
         end
     end
 end
+
+level.songIndex = 0
+
+function  level.getNextSong()
+    if level.current and level.current.music[level.songIndex+1] then
+        level.songIndex = level.songIndex + 1
+    end
+    return level.current and level.current.music[level.songIndex][1]
+end
+
 
 return level

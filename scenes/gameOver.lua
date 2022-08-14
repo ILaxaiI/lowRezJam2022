@@ -5,7 +5,7 @@ local viewport = require("ui.viewport")
 local q = love.graphics.newQuad
 local buttonSprite = love.graphics.newImage("graphics/menus/play_button.png")
 local iw,ih = buttonSprite:getWidth(),buttonSprite:getHeight()
-
+local music = require("audio.music")
 
 local state = require("util.state")
 local animation = require("util.animation")
@@ -19,6 +19,12 @@ local buttons = {
         {love.graphics.newQuad(49,34,48,16,iw,ih),love.graphics.newQuad(49,51,48,16,iw,ih)},
         8,30,48,16,
         function ()
+            
+            music[level.currentMusic]:stop()
+            level.musicIndex = 0
+            level.currentMusic = false
+            
+            
             state.list["game"].reset()
             animation.clearDetached()
             state.set("mainmenu");
@@ -30,6 +36,11 @@ local buttons = {
         function ()
             local guns = gamestate.guns
             local lvl = gamestate.currentLevel.name
+            
+            music[level.currentMusic]:stop()
+            level.musicIndex = 0
+            level.currentMusic = false
+            
             if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then
               
                 gamestate.entities.bullets:remove(gamestate.guns[1].weapon.activeShield)

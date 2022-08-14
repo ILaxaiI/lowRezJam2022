@@ -1,6 +1,7 @@
 local tut = {
     name = "tutorial",next = "level1",
     music ={{"intro",loop = true}},
+
     sections = {
        {
         advance = {progress = {"tutorial_asteroid_dodged",op = "OR"}},
@@ -19,7 +20,6 @@ local tut = {
     {
         advance = {progress = {"cannon_purchased",op = "AND"}},
 
-        songQueue = {},
         minSpawnTime = 2,
         maxSpawnTime = 2,
         randomEnemies = {

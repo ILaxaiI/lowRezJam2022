@@ -1,12 +1,10 @@
 return {
     next = "level7",
     name = "level6",
+    music = {{"part2",loop = true}},
     sections = {{
         advance = {duration = 45},
-    songQueue = {
-        "part2","part2","part2","part2","part2"
-    },
-    
+
     
     minSpawnTime = .6,
     maxSpawnTime =1.5,

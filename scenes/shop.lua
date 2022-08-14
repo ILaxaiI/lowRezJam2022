@@ -23,13 +23,8 @@ function  shop.update(dt)
     background.update(dt)
 end
 
-local music = require("audio.music")
-local musicVolume = 0
-local musicPrevol
 function  shop.init()
     gamestate.shop:reset()
-    musicVolume = 0
-    musicPrevol = music.source:getVolume()
 end
 
 local state = require("util.state")
@@ -52,6 +47,7 @@ end
 function  shop.update(dt)
     ndisp:update(dt)
     ndisp.n = tostring(gamestate.player.money)
+    --[[
     musicVolume = musicVolume+dt
     local vol = math.min(music.volume,math.max(music.volume * .2,musicPrevol-math.lerpc(0,music.volume*.95,musicVolume)))
     music.source:setFilter(
@@ -59,13 +55,15 @@ function  shop.update(dt)
         volume = music.volume,
         highgain = .6
         }
+
     )
+    music.source:setVolume(vol)
+]]
     
     pages[gamestate.shop.currentPage]:update(dt)
-    music.source:setVolume(vol)
 end
 function  shop.exit()
-    music.source:setFilter()
+   -- music.source:setFilter()
 end
 
 function  shop.mousepressed(x,y,b)
@@ -73,7 +71,6 @@ function  shop.mousepressed(x,y,b)
         
     x,y = viewport.translate(x,y)
         pages[gamestate.shop.currentPage]:clicked(x,y,b)
-
     end
 end
 

@@ -76,7 +76,7 @@ function gmst.default()
     }
     gamestate.stats = {}
 
-    gamestate.currentLevel = 0
+    gamestate.currentLevel = "tutorial"
     gamestate.currentSection = 1
     gamestate.progressFlags = {}
 

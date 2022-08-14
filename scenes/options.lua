@@ -7,10 +7,12 @@ local scene = require("util.state")
 local button = require("ui.elements.button")
 local settings = require("settings")
 local sfx = require("audio.sfx.sfx")
+local music = require("audio.music")
 local sliders = {
     {x = 32,y = 24,w = 28,p = settings.musicVolume,
     func = function (self)
         settings.musicVolume = self.p
+        music.setVolume(settings.musicVolume)
     end
 },
     {x = 32,y = 32,w = 28,p = settings.sfxVolume,
@@ -32,9 +34,10 @@ local close = button:new(
 
 
 local sliderHeld = false
-
+local level = require("levels.level")
 function  options.update(dt)
     background.update(dt)
+    level.updateMusic(dt)
 
     x,y = viewport.translate(love.mouse.getPosition())
     if sliderHeld  then

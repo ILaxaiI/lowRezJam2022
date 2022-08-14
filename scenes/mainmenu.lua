@@ -10,8 +10,13 @@ local gamestate = require("gamestate")
 local sb = require("graphics.sprites").button_atlas
 local iw2,ih2 = sb:getWidth(),sb:getHeight()
 
+local music = require("audio.music")
 function mainmenu.init()
+    music["intro"]:play()
     habitat = require("entities.habitat"):new()
+end
+
+function  mainmenu.exit()
 end
 
 local buttons = {
@@ -40,8 +45,11 @@ local buttons = {
 
 local background = require("ui.background")
 
+local music = require("audio.music")
 
 function  mainmenu.update(dt)
+
+
     background.update(dt)
     habitat:animate(dt)
 end

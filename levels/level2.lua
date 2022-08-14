@@ -1,7 +1,7 @@
 return {
     next = "level3",
     name = "level2",
-    music ={{"transition",loop = false},{"loop1",loop = true}},
+    music ={{"loop1",loop = true}},
     sections = {
         {
         advance = {duration = 45},
