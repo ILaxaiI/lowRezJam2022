@@ -42,12 +42,12 @@ local buttons = {
             level.songIndex = 0
             level.currentMusic = false
             
-            if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then
+            if gamestate.guns[0] and gamestate.guns[0].weapon and gamestate.guns[0].weapon.activeShield then
 
-                gamestate.entities.bullets:remove(gamestate.guns[1].weapon.activeShield)
+                gamestate.entities.bullets:remove(gamestate.guns[0].weapon.activeShield)
                 
-                gamestate.guns[1].weapon.activeShield = nil
-                gamestate.guns[1].weapon.cooldown=0
+                gamestate.guns[0].weapon.activeShield = nil
+                gamestate.guns[0].weapon.cooldown=0
             end
             local owned = gamestate.upgrades
 
@@ -66,11 +66,18 @@ local buttons = {
             for i = 0,2 do
                 if guns[i] then guns[i]:deselect() end
             end
-            for i = 0,2 do
-                if guns[i] then
-                    guns[i]:select()
-                    state.list["game"].selectedWeapon = i
-                    break
+            if guns[1] then
+                if guns[1] then
+                    guns[1]:select()
+                    gamestate.selectedWeapon = 1
+                end
+            else
+                for i = 0,2 do
+                    if guns[i] then
+                        guns[i]:select()
+                        gamestate.selectedWeapon = i
+                        break
+                    end
                 end
             end
 

@@ -92,7 +92,7 @@ local barrel = 1
 
 
 
-function large_ship:new()
+function large_ship:new(health)
     --local x,y = large_ship:getRandomSpawn()
     local x = 32-20
     local y = -22
@@ -101,8 +101,8 @@ function large_ship:new()
         x = x,
         y = y,
         r = 0,
-        maxHealth = 2000,--40*(5+gamestate.stats.cannon_firerate*gamestate.stats.cannon_damage),
-        health = 2000,--40*(5+gamestate.stats.cannon_firerate*gamestate.stats.cannon_damage),
+        maxHealth = health,--40*(5+gamestate.stats.cannon_firerate*gamestate.stats.cannon_damage),
+        health = health,--40*(5+gamestate.stats.cannon_firerate*gamestate.stats.cannon_damage),
         vx = 0,
         vy = 0,
         spawning = true,
@@ -146,11 +146,11 @@ function large_ship:takeDamage(dmg)
         self.health = self.health - dmg
         if self.health <= 0 then
             if self.ai.phase == "phase1" then
-                self.maxHealth = 1900
+                self.maxHealth = self.maxHealth - 100
                 self.ai.Forcetransition(self.ai,"damage1",self)
                 gamestate.currentSection = gamestate.currentSection + 1
             elseif self.ai.phase == "phase2" then
-                self.maxHealth = 1800
+                self.maxHealth = self.maxHealth - 100
                 self.ai.Forcetransition(self.ai,"damage2",self)
                 gamestate.currentSection = gamestate.currentSection + 1
             else

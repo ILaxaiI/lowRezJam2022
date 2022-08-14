@@ -6,7 +6,6 @@ local level = require("levels.level")
 local animation = require("util.animation")
 local background = require("ui.background")
 
-game.selectedWeapon = 0
 local habitat = require("entities.habitat")
 
 

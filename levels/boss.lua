@@ -8,7 +8,7 @@ local boss = {
             enemies = {
                 {
                 name = "large_ship",
-                spawns = {{t = 0, x = 32-20,y = 5,sv = 15}}
+                spawns = {{t = 0, x = 32-20,y = 5,sv = 1750}}
                 },
             }
         },

@@ -10,7 +10,8 @@ level.loaded = {
     level7 = require("levels.level7"),
     level8 = require("levels.level8"),
     boss = require("levels.boss"),
-    level9 = require("levels.level9")
+    level9 = require("levels.level9"),
+    boss_2 = require("levels.boss_2"),
 }
 
 local gamestate = require("gamestate")
@@ -45,7 +46,7 @@ function level.resetSpawned()
 end
 end
 level.currentMusic = false
-level.musicIndex = 1
+level.songIndex = 0
 local settings = require("settings")
 
 
@@ -53,18 +54,7 @@ function level.set(name)
     if not level.loaded[name] then print("level does not exist") return end
 
 
-    if level.current then
-        local cs = level.current.music[level.songindex]
-    
-        if level.loaded[level.current.next].music[level.songIndex+1] == cs then
-            level.songIndex = 1
-        else
-            level.songIndex = 0
-        end
 
-    else
-        level.songIndex = 0
-    end
 
     gamestate.currentSection = 1
 
@@ -122,6 +112,16 @@ function level.progress(section,...)
             else
                 progressTimer = 5
                 p = true
+                if level.current then
+                    local cs = level.current.music[level.songindex]
+                    if level.loaded[level.current.next].music[level.songIndex+1] == cs then
+                        level.songIndex = 1
+                    else
+                        level.songIndex = 0
+                    end
+                else
+                    level.songIndex = 0
+                end
             end
         end
     end
@@ -153,10 +153,8 @@ end
 
 function  level.update(dt)
     local section = level.current.sections[gamestate.currentSection]
-
+    level.updateMusic()
     if not p then
-        level.updateMusic()
-
         if section.randomEnemies then
             level.spawnRandomEntities(section,dt)
         end
@@ -169,7 +167,7 @@ function  level.update(dt)
            music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(.5,1,progressTimer/5)))
         end
         if progressTimer <= 0 then
-            if level.currentMusic then
+            if level.currentMusic and music[level.currentMusic] then
             music[level.currentMusic]:stop()
             end
             p = false

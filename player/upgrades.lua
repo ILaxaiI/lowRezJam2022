@@ -88,7 +88,7 @@ function upgrades.purchase_cannon.apply(level)
     if not gamestate.progressFlags.cannon_purchased then
     gamestate.progressFlags.cannon_purchased = true
     
-    gamestate.guns[0] = gb:new(gunSpawns[1])
+    gamestate.guns[1] = gb:new(gunSpawns[2])
     
     
     for i = 0,3 do
@@ -98,14 +98,14 @@ function upgrades.purchase_cannon.apply(level)
         end
     end
     
-    gamestate.guns[0]:attach(require("entities.guns.cannon"):new())
-    if gamestate.guns[0]:select() then gamestate.selectedWeapon = 0 end
+    gamestate.guns[1]:attach(require("entities.guns.cannon"):new())
+    if gamestate.guns[1]:select() then gamestate.selectedWeapon = 1 end
     end
 end
 
 function upgrades.upgrade_cannon.apply()
-    if not (gamestate.guns[0] and gamestate.guns[0].weapon) then
-         gamestate.guns[0] = gb:new(gunSpawns[1])
+    if not (gamestate.guns[1] and gamestate.guns[1].weapon) then
+         gamestate.guns[1] = gb:new(gunSpawns[2])
     end
 
         
@@ -116,10 +116,10 @@ function upgrades.upgrade_cannon.apply()
         end
     end
 
-    gamestate.guns[0]:attach(require("entities.guns.cannon2shot"):new())
-    gamestate.guns[0].spawning = true
-    gamestate.guns[0].spawnT = 0
-    if gamestate.guns[0]:select() then gamestate.selectedWeapon = 0 end
+    gamestate.guns[1]:attach(require("entities.guns.cannon2shot"):new())
+    gamestate.guns[1].spawning = true
+    gamestate.guns[1].spawnT = 0
+    if gamestate.guns[1]:select() then gamestate.selectedWeapon = 1 end
 end
 
 
@@ -138,9 +138,9 @@ function upgrades.purchase_energy_shield.apply()
 
 
 
-    gamestate.guns[1]= gb:new(gunSpawns[2])
-    gamestate.guns[1]:attach(require("entities.guns.energy_shield"):new())
-    if gamestate.guns[1]:select() then gamestate.selectedWeapon = 1 end
+    gamestate.guns[0]= gb:new(gunSpawns[1])
+    gamestate.guns[0]:attach(require("entities.guns.energy_shield"):new())
+    if gamestate.guns[0]:select() then gamestate.selectedWeapon = 1 end
     end
 end
 
