@@ -1,6 +1,6 @@
 local tut = {
     name = "tutorial",next = "level1",
-    music ={"intro"},
+    music = {"intro"},
 
     sections = {
        {

@@ -21,7 +21,7 @@ local buttons = {
         function ()
             
             music[level.currentMusic]:stop()
-            level.musicIndex = 0
+            level.songIndex = 0
             level.currentMusic = false
             
             
@@ -39,7 +39,7 @@ local buttons = {
             
             local money = gamestate.player.money
             music[level.currentMusic]:stop()
-            level.musicIndex = 0
+            level.songIndex = 0
             level.currentMusic = false
             
             if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then

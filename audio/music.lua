@@ -15,9 +15,13 @@ music.loop3_2 = love.audio.newSource("audio/music/Loop-3-part-2.mp3","static")
 music.loop4_intro = love.audio.newSource("audio/music/Loop-4-part-1-intro.mp3","static")
 music.loop4 = love.audio.newSource("audio/music/Loop-4-part-2-_LOOP_.mp3","static")
 
-music.boss1 = love.audio.newSource("audio/music/lowrezjam-Boss-Intro.mp3","static")
-music.boss2 = love.audio.newSource("audio/music/lowrezjam-Boss-1.mp3","static")
-music.boss3 = love.audio.newSource("audio/music/lowrezjam-Boss-2.mp3","static")
+music.boss1 = love.audio.newSource("audio/music/Lowrezjam-boss-fight-intro.mp3","static")
+music.boss_intro2 =  love.audio.newSource("audio/music/lvl_9_boss_transition.mp3","static")
+music.boss2 = love.audio.newSource("audio/music/Lowrezjam_boss_fight_part_1.mp3","static")
+music.boss3 = love.audio.newSource("audio/music/Lowrezjam_boss_fight_part_2_loop.mp3","static")
+
+music.loop5_intro = love.audio.newSource("audio/music/lvl_9_intro.mp3","static")
+music.loop5 = love.audio.newSource("audio/music/lvl_9_main_loop.mp3","static")
 
 
 function  music.setVolume(vol)

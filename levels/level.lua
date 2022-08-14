@@ -165,8 +165,8 @@ function  level.update(dt)
         level.progress(section,allSpawned)
     else
         progressTimer = progressTimer - dt
-        if level.current.next == "boss" or level.current.name =="boss" then
-            music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(0,1,progressTimer/5)))
+        if level.current.name == "boss" then
+           music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(.5,1,progressTimer/5)))
         end
         if progressTimer <= 0 then
             music[level.currentMusic]:stop()
