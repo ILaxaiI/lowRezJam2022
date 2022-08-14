@@ -14,7 +14,7 @@ stars:start()
 for i = 1,40 do
     stars:update(1)
 end
-backcanv = love.image.newImageData(64,64)
+local backcanv = love.image.newImageData(64,64)
 
 local seed
 for i = 1,100 do seed = love.math.random() end
@@ -30,6 +30,9 @@ for x = 0,63 do
     end
 end
 
+
+--backcanv:encode("png","bckrnd.png")
+
 backcanv = love.graphics.newImage(backcanv)
 
 
@@ -42,4 +45,5 @@ end
 function background.update(dt)
     stars:update(dt)
 end
+
 return background

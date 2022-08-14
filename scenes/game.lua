@@ -159,7 +159,7 @@ function  game.draw()
     
 
     -- DEBUG STUFF
-    love.graphics.print(level.current.name.." "..gamestate.currentSection,0,15,0,4)
+   -- love.graphics.print(level.current.name.." "..gamestate.currentSection,0,15,0,4)
 end
 
 function game.mousereleased(x,y,b)

@@ -43,8 +43,10 @@ function  shop.draw()
     viewport.endRender()
     viewport.draw()
 end
-
+local level = require("levels.level")
 function  shop.update(dt)
+    
+    level.updateMusic(dt)
     ndisp:update(dt)
     ndisp.n = tostring(gamestate.player.money)
     --[[

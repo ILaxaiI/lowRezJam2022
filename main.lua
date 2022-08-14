@@ -34,7 +34,7 @@ state.set("mainmenu")
 
 function  love.draw()
     state.draw()
-    love.graphics.print(love.timer.getFPS())
+   -- love.graphics.print(love.timer.getFPS())
 end
 
 function  love.update(dt)

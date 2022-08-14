@@ -4,7 +4,7 @@ local l1 = {
     music = {{"transition",loop = false},{"loop1",loop = true}},
     sections = {
         {
-    advance = {duration = 25},
+    advance = {duration = 35},
     minSpawnTime = .5,
     maxSpawnTime = 2,
 
