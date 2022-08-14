@@ -1,7 +1,7 @@
 local boss = {
     name = "boss",
     next = "level9",
-    music = {{"boss1"},{"boss2"},{"boss3"}},
+    music = {"boss1","boss2","boss3"},
     sections = {
         {
             advance = {scripted = true},

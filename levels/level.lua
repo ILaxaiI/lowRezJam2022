@@ -52,8 +52,22 @@ local settings = require("settings")
 function level.set(name)
     if not level.loaded[name] then print("level does not exist") return end
 
-    level.songIndex = 0
+
+    if level.current then
+        local cs = level.current.music[level.songindex]
+    
+        if level.loaded[level.current.next].music[level.songIndex+1] == cs then
+            level.songIndex = 1
+        else
+            level.songIndex = 0
+        end
+
+    else
+        level.songIndex = 0
+    end
+
     gamestate.currentSection = 1
+
     level.current = level.loaded[name]
     gamestate.currentLevel = level.current
 
@@ -210,7 +224,7 @@ function  level.getNextSong()
     if level.current and level.current.music[level.songIndex+1] then
         level.songIndex = level.songIndex + 1
     end
-    return level.current and level.current.music[level.songIndex][1]
+    return level.current and level.current.music[level.songIndex]
 end
 
 

@@ -1,7 +1,7 @@
 local l1 = {
     name = "level1",
     next = "level2",
-    music = {{"transition",loop = false},{"loop1",loop = true}},
+    music = {"transition","loop1"},
     sections = {
         {
     advance = {duration = 35},

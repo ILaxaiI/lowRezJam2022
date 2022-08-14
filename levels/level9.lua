@@ -1,7 +1,7 @@
 return {
     next = "boss",
     name = "level9",
-    music = {{"part2",loop = true}},
+    music = {"loop3"},
 
     sections = {{
         advance = {duration = 90},

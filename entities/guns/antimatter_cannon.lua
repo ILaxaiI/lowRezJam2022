@@ -29,7 +29,7 @@ function cannon:shoot()
     local bx,by = self:calcBarrelPos()
     local bullet =  bullet:new(bx,by,self.barrelAngle-math.pi/2)
     gamestate.entities.bullets:insert( bullet)
-    self.cooldown = 2.3
+    self.cooldown = 2.1
 end
 
 return cannon

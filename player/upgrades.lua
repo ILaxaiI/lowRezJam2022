@@ -24,7 +24,7 @@ local upgrades = {
 
     upgrade_cannon = {
         maxLevel = 1,
-        price = function () return 5000 end
+        price = function () return 4000 end
     },
 
 
@@ -54,11 +54,11 @@ local upgrades = {
 
     purchase_antimatter_cannon = {
         maxLevel = 1,
-        price = function () return 4000 end
+        price = function () return 3000 end
     },
     antimatter_explosion_size = {
         maxLevel = 10,
-        price = function () return 1250 + ((gamestate.upgrades["antimatter_explosion_size"] and gamestate.upgrades["antimatter_explosion_size"].level or 0)+1) * 350 end
+        price = function () return 1250 + ((gamestate.upgrades["antimatter_explosion_size"] and gamestate.upgrades["antimatter_explosion_size"].level or 0)+1) * 250 end
     },
     antimatter_explosion_damage = {
         maxLevel = 10,
@@ -188,14 +188,13 @@ end
 function  upgrades.cannon_damage.apply(level)
     local b = gamestate.base_stats.cannon_damage
     gamestate.stats.cannon_damage = b+.5*level
-    
 end
 
 
 
 function  upgrades.antimatter_explosion_size.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_size
-    gamestate.stats.antimatter_explosion_size = b+.11*level
+    gamestate.stats.antimatter_explosion_size = b+.07*level
 end
 function  upgrades.antimatter_explosion_damage.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_damage

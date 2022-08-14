@@ -1,7 +1,7 @@
 return {
     next = "level4",
     name = "level3",
-    music = {{"loop2",loop = true}},
+    music = {"loop2"},
     sections = {{
         advance = {duration = 35},
         minSpawnTime = .8,

@@ -5,9 +5,15 @@ music.intro = love.audio.newSource("audio/music/lowrezjam-soundtrack-intro-_DOES
 music.transition = love.audio.newSource("audio/music/lowrezjam-soundtrack-Loop-1-first-pass.mp3","static")
 
 music.loop1 = love.audio.newSource("audio/music/lowrezjam-soundtrack-Loop-1.mp3","static")
+
 music.loop2 = love.audio.newSource("audio/music/lowrezjam-soundtrack-Loop-2.mp3","static")
 
-music.part2 = love.audio.newSource("audio/music/lowrezjam-soundtrack-second-part-full-demo.mp3","static")
+music.loop3_intro = love.audio.newSource("audio/music/Loop-3-intro.mp3","static")
+music.loop3_1 = love.audio.newSource("audio/music/Loop-3-part-1.mp3","static")
+music.loop3_2 = love.audio.newSource("audio/music/Loop-3-part-2.mp3","static")
+
+music.loop4_intro = love.audio.newSource("audio/music/Loop-4-part-1-intro.mp3","static")
+music.loop4 = love.audio.newSource("audio/music/Loop-4-part-2-_LOOP_.mp3","static")
 
 music.boss1 = love.audio.newSource("audio/music/lowrezjam-Boss-Intro.mp3","static")
 music.boss2 = love.audio.newSource("audio/music/lowrezjam-Boss-1.mp3","static")
