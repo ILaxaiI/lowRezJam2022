@@ -11,8 +11,11 @@ local sb = require("graphics.sprites").button_atlas
 local iw2,ih2 = sb:getWidth(),sb:getHeight()
 
 local music = require("audio.music")
+local level = require("levels.level")
 function mainmenu.init()
+    music["intro"]:setLooping(true)
     music["intro"]:play()
+        
     habitat = require("entities.habitat"):new()
 end
 
@@ -25,6 +28,7 @@ local buttons = {
     {love.graphics.newQuad(0,0,48,16,iw,ih),love.graphics.newQuad(0,17,48,16,iw,ih)},
     8,16,48,16,
     function ()
+        music["intro"]:setLooping(false)
         state.set("game",habitat);
     end),
     button:new(
@@ -48,6 +52,7 @@ local background = require("ui.background")
 local music = require("audio.music")
 
 function  mainmenu.update(dt)
+    level.updateMusic(dt)
 
 
     background.update(dt)

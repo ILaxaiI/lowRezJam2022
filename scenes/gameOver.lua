@@ -37,6 +37,7 @@ local buttons = {
             local guns = gamestate.guns
             local lvl = gamestate.currentLevel.name
             
+            local money = gamestate.player.money
             music[level.currentMusic]:stop()
             level.musicIndex = 0
             level.currentMusic = false
@@ -51,6 +52,7 @@ local buttons = {
 
             local pf = gamestate.progressFlags
             gamestate.default()
+            gamestate.player.money = money
             gamestate.progressFlags = pf
 
             for n,v in pairs(owned) do
