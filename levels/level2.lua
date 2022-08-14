@@ -4,7 +4,7 @@ return {
     music ={{"loop1",loop = true}},
     sections = {
         {
-        advance = {duration = 45},
+        advance = {duration = 25},
   
     
     minSpawnTime = .9,

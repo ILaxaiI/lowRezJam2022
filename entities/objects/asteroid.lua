@@ -5,7 +5,7 @@ asteroid.damage = 1
 asteroid.w = 7
 asteroid.h = 6
 asteroid.collidewithplayer = true
-asteroid.money = 25
+asteroid.money = 30
 
 function asteroid:new(speed)
     local x,y = asteroid:getRandomSpawn()

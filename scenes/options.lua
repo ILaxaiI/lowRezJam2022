@@ -88,7 +88,7 @@ function  options.mousereleased(x,y,b)
         if sliderHeld then
             sliderHeld.func(sliderHeld)
             
-            if sliderHeld == sliders[2] then sfx.play("explosion1") end
+            if sliderHeld == sliders[2] then sfx.play("laser1") end
             settings:save()
             sliderHeld = false
         end

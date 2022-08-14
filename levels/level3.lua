@@ -3,7 +3,7 @@ return {
     name = "level3",
     music = {{"loop2",loop = true}},
     sections = {{
-        advance = {duration = 45},
+        advance = {duration = 35},
         minSpawnTime = .8,
         maxSpawnTime = 1.6,
         randomEnemies = {
