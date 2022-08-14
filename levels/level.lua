@@ -9,7 +9,8 @@ level.loaded = {
     level6 = require("levels.level6"),
     level7 = require("levels.level7"),
     level8 = require("levels.level8"),
-    boss = require("levels.boss")
+    boss = require("levels.boss"),
+    level9 = require("levels.level9")
 }
 
 local gamestate = require("gamestate")
@@ -150,7 +151,7 @@ function  level.update(dt)
         level.progress(section,allSpawned)
     else
         progressTimer = progressTimer - dt
-        if level.current.next == "boss" then
+        if level.current.next == "boss" or level.current.name =="boss" then
             music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(0,1,progressTimer/5)))
         end
         if progressTimer <= 0 then

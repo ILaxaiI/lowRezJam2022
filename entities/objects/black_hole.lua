@@ -68,7 +68,7 @@ function black_hole:new(speed)
         y = y,
         health = 2,
         vx = 0,
-        vy = speed,
+        vy = speed or 20,
     }
     holes[#holes+1] = hole
     return setmetatable(hole,self)

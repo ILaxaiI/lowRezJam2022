@@ -82,6 +82,7 @@ end
 
 large_ship.hq = love.graphics.newQuad(0,0,1,1,2,1)
 large_ship.maxHealth = 500
+large_ship.money = 1000
 
 
 
@@ -155,7 +156,6 @@ function large_ship:takeDamage(dmg)
                   gamestate.currentSection = gamestate.currentSection + 1
               
             else
-                gamestate.progressFlags.boss_beaten = true
                 self.ai.Forcetransition(self.ai,"idle",self)
                 self:die()
             end
@@ -198,6 +198,7 @@ function  large_ship:die(payout)
     if payout then
         gamestate.player.money = gamestate.player.money + large_ship.money
     end
+    gamestate.progressFlags.boss_beaten = true
     animation.startDetached(explosion:create(),self.x,self.y)
 
     self.isDead = true
