@@ -40,6 +40,29 @@ local upgrade_buttons = {
 
 local upgradeq = love.graphics.newQuad(0,33,3,8,64,64)
 local upgradeb = love.graphics.newQuad(4,33,3,8,64,64)
+
+local mdis = {
+    energy_shield_health = money_display:new(tostring(upgrades.energy_shield_health:price()),29,22),
+    energy_shield_recharge =   money_display:new(tostring(upgrades.energy_shield_recharge:price()),29,37),
+}
+
+local function  drawUpgrades(name,x,y)
+
+    if not (gamestate.upgrades[name] and gamestate.upgrades[name].level >= upgrades[name].maxLevel) then
+        mdis[name]:draw()
+    end
+
+    for i = 1,upgrades[name].maxLevel do
+        love.graphics.draw(button_atlas,upgradeq,x-2*i,y)
+    end
+    if gamestate.upgrades[name] then
+        for i = 1,gamestate.upgrades[name].level do
+            love.graphics.draw(button_atlas,upgradeb,x-2*i,y)
+        end
+    end
+
+end
+
 function  page:draw()
 
     love.graphics.print("Shield",13,3)
@@ -52,38 +75,10 @@ function  page:draw()
     else
 
         love.graphics.print("Shield Health",11,13)
-        for i = 1,upgrades.energy_shield_health.maxLevel do
-            love.graphics.draw(button_atlas,upgradeq,49-2*i,20)
-        end
-        if gamestate.upgrades.energy_shield_health then
-            for i = 1,gamestate.upgrades.energy_shield_health.level do
-                love.graphics.draw(button_atlas,upgradeb,49-2*i,20)
-            end
-        end
-
+        drawUpgrades("energy_shield_health",49,20)
         love.graphics.print("Recharge Rate",11,29)
+        drawUpgrades("energy_shield_recharge",49,36)
 
-        for i = 1,upgrades.energy_shield_recharge.maxLevel do
-            love.graphics.draw(button_atlas,upgradeq,49-2*i,36)
-        end
-        if gamestate.upgrades.energy_shield_recharge then
-            for i = 1,gamestate.upgrades.energy_shield_recharge.level do
-                love.graphics.draw(button_atlas,upgradeb,49-2*i,36)
-            end
-        end
-
-        --[[
-
-        love.graphics.print("Double Barrel",10,45)
-        for i = 1,upgrades.upgrade_cannon.maxLevel do
-            love.graphics.draw(button_atlas,upgradeq,49-2*i,52)
-        end
-        if gamestate.upgrades.upgrade_cannon then
-            for i = 1,gamestate.upgrades.upgrade_cannon.level do
-                love.graphics.draw(button_atlas,upgradeb,49-2*i,52)
-            end
-        end
-]]
         for i,v in ipairs(upgrade_buttons) do
             v:draw()
         end
@@ -91,6 +86,8 @@ function  page:draw()
 end
 
 function  page:update(dt)
+    mdis.energy_shield_health.n = tostring(upgrades.energy_shield_health:price())
+    mdis.energy_shield_recharge.n = tostring(upgrades.energy_shield_recharge:price())
 end
 
 function  page:clicked(x,y,b)
