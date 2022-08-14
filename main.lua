@@ -44,9 +44,9 @@ end
 local music = require("audio.music")
 
 local filter = true
-function  love.keypressed(key)
+function  love.keypressed(key,code)
 
-    state.keypressed(key)
+    state.keypressed(key,code)
 end
 
 function  love.mousepressed(x,y,b)

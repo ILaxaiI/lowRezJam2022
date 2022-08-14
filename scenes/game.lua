@@ -61,10 +61,10 @@ function  game.update(dt)
             gamestate.guns[gamestate.selectedWeapon].weapon:mouseDown()
     end
 
-    if love.keyboard.isDown("a","left") then
+    if love.keyboard.isScancodeDown("a","left") then
         gamestate.player.entity.x = math.max(-12,gamestate.player.entity.x - gamestate.stats.player_speed*dt)
     end
-    if love.keyboard.isDown("d","right") then
+    if love.keyboard.isScancodeDown("d","right") then
         gamestate.player.entity.x = math.min(64-30+12,gamestate.player.entity.x + gamestate.stats.player_speed*dt)
     end
     
@@ -171,14 +171,13 @@ function game.mousereleased(x,y,b)
 end
 
 
-function  game.keypressed(key)
+function  game.keypressed(key,code)
     if gamestate.progressFlags.tutorial_asteroid_dodged and
-    key == "b" then scene.set("shop") end
-    if key == "1" then game.selectGun(0) end
-    if key == "2" then game.selectGun(1) end
-    if key == "3" then game.selectGun(2) end
-    if key == "4" then game.selectGun(3) end
-    if key == "escape" then scene.set("options","game") end
+    code == "b" then scene.set("shop") end
+    if code == "1" or code == "kp1" then game.selectGun(0) end
+    if code == "2" or code == "kp1" then game.selectGun(1) end
+    if code == "3" or code == "kp1" then game.selectGun(2) end
+    if code == "escape" then scene.set("options","game") end
 end
 
 return game
