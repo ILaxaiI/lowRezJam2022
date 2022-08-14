@@ -42,7 +42,7 @@ sfx.load("audio/sfx/laserSmall_003.ogg","laser3",5)
 sfx.load("audio/sfx/laserSmall_004.ogg","laser4",5)
 
 sfx.shieldEffect = love.audio.newSource("audio/sfx/spaceEngine_002.ogg","static")
-sfx.shieldEffect:setLooping(true)
+--sfx.shieldEffect:setLooping(true)
 
 
 

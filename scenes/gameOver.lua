@@ -43,8 +43,9 @@ local buttons = {
             level.currentMusic = false
             
             if gamestate.guns[1] and gamestate.guns[1].weapon and gamestate.guns[1].weapon.activeShield then
-              
+
                 gamestate.entities.bullets:remove(gamestate.guns[1].weapon.activeShield)
+                
                 gamestate.guns[1].weapon.activeShield = nil
                 gamestate.guns[1].weapon.cooldown=0
             end
@@ -56,13 +57,23 @@ local buttons = {
             gamestate.progressFlags = pf
 
             for n,v in pairs(owned) do
-                
                 for i = 1,v.level do
                     upgrades.purchase(n,true)
                 end
             end
-
             gamestate.guns = guns
+
+            for i = 0,2 do
+                if guns[i] then guns[i]:deselect() end
+            end
+            for i = 0,2 do
+                if guns[i] then
+                    guns[i]:select()
+                    state.list["game"].selectedWeapon = i
+                    break
+                end
+            end
+
             gamestate.player.entity = require("entities.habitat"):new()
             level.set(lvl)
 

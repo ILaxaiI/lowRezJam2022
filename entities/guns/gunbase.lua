@@ -37,7 +37,14 @@ function  gunbase:update(dt)
     if self.weapon then
         self.weapon:update(dt)
     end
+end
 
+function gunbase:deselect()
+    if self.weapon then
+        self.weapon.isSelected = false
+        self.weapon:mouseReleased()
+        return self.weapon
+    end
 end
 
 

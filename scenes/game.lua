@@ -16,8 +16,6 @@ function  game.reset()
 end
 
 function game.init(_,reset)
-
-    
     if reset or not gamestate.player.entity then
         level.set(level.loaded[gamestate.currentLevel].name)
         game.reset()
@@ -25,17 +23,21 @@ function game.init(_,reset)
 end
 
 
-
+function  game.exit()
+    if gamestate.guns[gamestate.selectedWeapon] and
+    gamestate.guns[gamestate.selectedWeapon].weapon then
+        gamestate.guns[gamestate.selectedWeapon].weapon:mouseReleased()
+    end
+end
 
 function game.selectGun(new)
     if new == gamestate.selectedWeapon then return end
     local old = gamestate.selectedWeapon
-    local currentWeapon = gamestate.guns[old] and gamestate.guns[old].weapon
+    local currentWeapon = gamestate.guns[old]
     if  gamestate.guns[new] and gamestate.guns[new]:select() then
         gamestate.selectedWeapon = new
         if currentWeapon then
-            currentWeapon.isSelected = false
-            currentWeapon:switchOff()
+            currentWeapon:deselect()
         end
     end
 end

@@ -169,7 +169,9 @@ function  level.update(dt)
            music[level.currentMusic]:setVolume(settings.musicVolume * (math.lerpc(.5,1,progressTimer/5)))
         end
         if progressTimer <= 0 then
+            if level.currentMusic then
             music[level.currentMusic]:stop()
+            end
             p = false
             level.set(level.current.next)
         end

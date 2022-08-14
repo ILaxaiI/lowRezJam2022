@@ -84,8 +84,5 @@ function  gun:mouseReleased() end
 
 
 
-function  gun:switchOff()
-    
-end
 
 return gun
