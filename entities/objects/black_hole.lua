@@ -44,7 +44,7 @@ local distorBuffer = love.graphics.newCanvas(viewport.canvas:getWidth(),viewport
 local black_hole = require("entities.entity"):extend()
 
 local holes = {}
-
+black_hole.type = "black_hole"
 black_hole.w = 3
 black_hole.h = 3
 
@@ -117,4 +117,5 @@ function black_hole:impactPlayer(dt)
     gamestate.player.health = gamestate.player.health - self.damage*dt
 end
 
+function  black_hole:takeDamage() end
 return black_hole

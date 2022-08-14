@@ -50,9 +50,9 @@ function gmst.default()
     gamestate.player = gamestate.player or {}
     gamestate.player.passive_income = 0
     gamestate.player.money = 100
-    gamestate.player.health = 2
+    gamestate.player.health = 20
     gamestate.player.maxHealth = 20
-    gamestate.player.base_maxHealth=20
+    gamestate.player.base_maxHealth= 20
     gamestate.player.guns = {}
     gamestate.player.entity = nil -- = require("entities.habitat").new(),
 

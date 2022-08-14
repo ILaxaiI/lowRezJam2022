@@ -195,11 +195,11 @@ end
 
 function  upgrades.antimatter_explosion_size.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_size
-    gamestate.stats.antimatter_explosion_size = b+.12*level
+    gamestate.stats.antimatter_explosion_size = b+.11*level
 end
 function  upgrades.antimatter_explosion_damage.apply(level)
     local b = gamestate.base_stats.antimatter_explosion_damage
-    gamestate.stats.antimatter_explosion_damage = b+7*level
+    gamestate.stats.antimatter_explosion_damage = b+30*level
 end
 
 
