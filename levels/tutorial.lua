@@ -1,5 +1,5 @@
 local tut = {
-    name = "tutorial",next = "boss",
+    name = "tutorial",next = "level1",
     music = {"intro"},
 
     sections = {

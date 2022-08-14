@@ -146,11 +146,11 @@ function large_ship:takeDamage(dmg)
         self.health = self.health - dmg
         if self.health <= 0 then
             if self.ai.phase == "phase1" then
-                self.maxHealth = self.maxHealth - 100
+                self.maxHealth = self.maxHealth - 150
                 self.ai.Forcetransition(self.ai,"damage1",self)
                 gamestate.currentSection = gamestate.currentSection + 1
             elseif self.ai.phase == "phase2" then
-                self.maxHealth = self.maxHealth - 100
+                self.maxHealth = self.maxHealth - 150
                 self.ai.Forcetransition(self.ai,"damage2",self)
                 gamestate.currentSection = gamestate.currentSection + 1
             else

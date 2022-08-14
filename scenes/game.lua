@@ -111,13 +111,20 @@ local tutorial = {
     shop_prompt = text:new("[B] to open shop ",2,20),
     shoot_prompt = text:new("Mouse to aim\nClick to shoot\n[1-3]/Mouse wheel\nto swap",2,20),
 
+    buy_some_damn_stuff_prompt = text:new("[B] to Buy\nupgrades",2,20)
 }
+game.shop_reminder_used = false
 
 function  game.draw()
     viewport.beginRender()
     background.draw()
 
     gamestate.player.entity:draw(dt)
+
+    if gamestate.player.money >= 3000 and not game.shop_reminder_used then
+        tutorial.buy_some_damn_stuff_prompt:draw()
+    end
+
     for i = #gamestate.guns,0,-1 do
         local v = gamestate.guns[i]
         if v and v.draw and not v.isDead  then v:draw() end
@@ -174,7 +181,10 @@ end
 
 function  game.keypressed(key,code)
     if gamestate.progressFlags.tutorial_asteroid_dodged and
-    code == "b" then scene.set("shop") end
+    code == "b" then
+        if gamestate.player.money >= 3000 and not game.shop_reminder_used then game.shop_reminder_used = true end
+        scene.set("shop")
+    end
     if code == "1" or code == "kp1" then game.selectGun(0) end
     if code == "2" or code == "kp1" then game.selectGun(1) end
     if code == "3" or code == "kp1" then game.selectGun(2) end
